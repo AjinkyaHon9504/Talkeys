@@ -98,7 +98,6 @@ fun CommunityTitle(title: String) {
             fontFamily = FontFamily(Font(R.font.urbanist_semibold)),
             color = Color.White
         ),
-        modifier = Modifier.padding(start = 19.dp, top = 8.dp)
     )
 }
 
