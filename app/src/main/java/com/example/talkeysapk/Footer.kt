@@ -19,9 +19,10 @@ import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.NavController
 
 @Composable
-fun Footer(modifier: Modifier = Modifier) {
+fun Footer(modifier: Modifier = Modifier,navController: NavController) {
     Column(
         modifier = modifier
             .fillMaxWidth()
@@ -81,7 +82,7 @@ fun Footer(modifier: Modifier = Modifier) {
                 modifier = Modifier.width(150.dp), // Keep some width constraint
                 horizontalAlignment = Alignment.CenterHorizontally // Center text buttons
             ) {
-                FooterTextButton("Contact us") { println("Navigating to Contact Us!") }
+                FooterTextButton("Contact us") { navController.navigate("contact_us") }
                 Spacer(modifier = Modifier.height(18.dp))
 
                 FooterTextButton("About us") { println("Navigating to About Us!") }
@@ -128,7 +129,8 @@ fun Footer(modifier: Modifier = Modifier) {
                 fontWeight = FontWeight.W400,
                 color = Color(0xFFF5F5F5),
             ),
-            modifier = Modifier.width(230.dp).height(22.dp)
+            modifier = Modifier.width(230.dp)
+                //.height(22.dp)
         )
     }
 }
@@ -158,10 +160,5 @@ fun SocialMediaIcon(@DrawableRes iconRes: Int) {
     )
 }
 
-// ✅ Preview for Footer (Kept as is)
-@Preview(showBackground = true, backgroundColor = 0xFF000000)
-@Composable
-fun FooterPreview() {
-    Footer()
-}
+
 

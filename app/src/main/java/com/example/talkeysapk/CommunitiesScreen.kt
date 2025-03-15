@@ -10,7 +10,9 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.paint
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
@@ -20,31 +22,24 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.talkies.ui.HomeTopBar
+
 @Composable
 fun CommunitiesScreen(navController: NavController) {
-    val category1Communities = listOf(
-        HomePageCommunity("Music Lovers", R.drawable.ic_community_card, "A vibrant group of music enthusiasts."),
-        HomePageCommunity("Tech Geeks", R.drawable.ic_community_card, "For tech lovers and innovators."),
-        HomePageCommunity("Dance Squad", R.drawable.ic_community_card, "A community for passionate dancers.")
-    )
+    val allCommunities = CommunityData.getAllCommunities()
+    val categories = CommunityData.getAllCategories()
 
-    val category2Communities = listOf(
-        HomePageCommunity("Art Lovers", R.drawable.ic_community_card, "For creators and art admirers."),
-        HomePageCommunity("Fitness Enthusiasts", R.drawable.ic_community_card, "Focus on health and well-being."),
-        HomePageCommunity("Book Club", R.drawable.ic_community_card, "Sharing a love for reading.")
-    )
-
-    val category3Communities = listOf(
-        HomePageCommunity("Travel Explorers", R.drawable.ic_community_card, "For adventurous souls."),
-        HomePageCommunity("Foodies Unite", R.drawable.ic_community_card, "Exploring the best cuisines."),
-        HomePageCommunity("Photography Pros", R.drawable.ic_community_card, "Capturing the best moments.")
-    )
-
-    Box(modifier = Modifier.fillMaxSize()) {
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .paint(
+                painter = painterResource(id = R.drawable.background), // Replace with your background image resource ID
+                contentScale = ContentScale.Crop
+            )
+    ) {
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .background(Color.Black)
+                .background(Color.Black.copy(alpha = 0.5f)) // Optional: Add a semi-transparent overlay if needed
                 .padding(bottom = 56.dp) // Padding for BottomBar
         ) {
             // Top Bar
@@ -69,23 +64,34 @@ fun CommunitiesScreen(navController: NavController) {
                     )
                 }
 
-                // Categories
-                item { CommunityTitle("Category 1") }
-                item { CommunityRow(category1Communities) }
+                categories.forEach { category ->
+                    item { CommunityTitle(category.name) }
+                    item { CommunityRow(category.communities, navController) }
+                }
 
-                item { CommunityTitle("Category 2") }
-                item { CommunityRow(category2Communities) }
-
-                item { CommunityTitle("Category 3") }
-                item { CommunityRow(category3Communities) }
-
-                item { Footer() }
+                item { Footer(navController = navController) }
             }
         }
         val scrollState = rememberScrollState()
 
         // BottomBar
-        BottomBar(navController = navController, scrollState,modifier = Modifier.align(Alignment.BottomCenter))
+        BottomBar(navController = navController, scrollState, modifier = Modifier.align(Alignment.BottomCenter))
+    }
+}
+@Composable
+fun CommunityRow(communities: List<HomePageCommunity>, navController: NavController) {
+    LazyRow(
+        contentPadding = PaddingValues(horizontal = 19.dp),
+        horizontalArrangement = Arrangement.spacedBy(22.dp)
+    ) {
+        items(communities) { community ->
+            CommunityCard(
+                name = community.name,
+                imageRes = community.imageRes,
+                description = community.description,
+                navController = navController
+            )
+        }
     }
 }
 
@@ -98,21 +104,7 @@ fun CommunityTitle(title: String) {
             fontFamily = FontFamily(Font(R.font.urbanist_semibold)),
             color = Color.White
         ),
+        modifier = Modifier.padding(start = 30.dp)
     )
 }
 
-@Composable
-fun CommunityRow(communities: List<HomePageCommunity>) {
-    LazyRow(
-        contentPadding = PaddingValues(horizontal = 19.dp),
-        horizontalArrangement = Arrangement.spacedBy(22.dp)
-    ) {
-        items(communities) { community ->
-            CommunityCard(
-                name = community.name,
-                imageRes = community.imageRes,
-                description = community.description
-            )
-        }
-    }
-}

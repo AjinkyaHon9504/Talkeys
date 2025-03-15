@@ -70,7 +70,7 @@ fun BottomBar(navController: NavController, scrollState: ScrollState, modifier: 
                 "communities",
                 "events",
                 "home",
-                "",
+                "explore",
                 ""
             )
 

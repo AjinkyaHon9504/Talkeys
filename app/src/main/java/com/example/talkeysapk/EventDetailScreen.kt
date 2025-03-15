@@ -1,11 +1,11 @@
 package com.example.talkeysapk
+
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.*
 import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -51,6 +51,7 @@ fun EventDetailScreen(event: Event, navController: NavController? = null) {
             .padding(16.dp)
     ) {
         HomeTopBar()
+
         Image(
             painter = painterResource(id = event.imageRes),
             contentDescription = event.title,
@@ -112,6 +113,7 @@ fun EventDetailItem(iconRes: Int, text: String, fontSize: TextUnit, fontWeight: 
     }
 }
 
+// Event Information Box
 @Composable
 fun EventInfoBox() {
     Box(
@@ -177,8 +179,6 @@ fun RegisterButton() {
         )
     }
 }
-
-// Event Tags
 @Composable
 fun EventTags() {
     Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
@@ -201,6 +201,7 @@ fun EventTag(tag: String) {
     }
 }
 
+// Tab Bar
 @Composable
 fun EventTabs(selectedTab: String, onTabSelected: (String) -> Unit) {
     Row(
@@ -221,6 +222,7 @@ fun EventTabs(selectedTab: String, onTabSelected: (String) -> Unit) {
         }
     }
 }
+
 // Event Section Content
 @Composable
 fun EventSectionContent(text: String) {
@@ -244,5 +246,3 @@ fun PreviewEventDetailScreen() {
 
     EventDetailScreen(event = sampleEvent)
 }
-
-

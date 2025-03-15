@@ -2,6 +2,7 @@ package com.example.talkeysapk
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
@@ -19,19 +20,26 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import com.example.talkeysapk.ui.theme.TalkeysApkTheme
 
 @Composable
-fun CommunityCard(name: String, imageRes: Int, description: String) {
+fun CommunityCard(name: String, imageRes: Int, description: String, navController: NavController) {
     // ✅ Wrapper Box with Background and Shadows
     Box(
         modifier = Modifier
-            .offset(x = 0.dp, y = 0.dp)
-            .shadow(elevation = 4.dp, spotColor = Color(0xFF000000), ambientColor = Color(0xFF000000))
-            .shadow(elevation = 27.dp, spotColor = Color(0x40FFFFFF), ambientColor = Color(0x40FFFFFF))
+           // .offset(x = 0.dp, y = 0.dp)
+            .shadow(elevation = 4.dp,
+               // spotColor = Color(0xFF000000),
+                ambientColor = Color(0xFF20201F)
+            )
+          //  .shadow(elevation = 27.dp,
+              //  spotColor = Color(0x40FFFFFF),
+            //    ambientColor = Color(0x40FFFFFF))
             .width(148.dp)
+            .clickable { navController.navigate("communityInfo/$name") }
             .height(200.dp) // Slightly increased height to accommodate extra text
-            .background(color = Color(0x1AFFFFFF), shape = RoundedCornerShape(size = 15.dp))
+            .background(color = Color(0xFF212020), shape = RoundedCornerShape(size = 15.dp))
             .padding(start = 6.dp, top = 7.dp, end = 6.dp, bottom = 7.dp)
     ) {
         Column(
@@ -75,17 +83,5 @@ fun CommunityCard(name: String, imageRes: Int, description: String) {
                 modifier = Modifier.padding(start = 6.dp, top = 2.dp)
             )
         }
-    }
-}
-
-@Preview(showBackground = true, showSystemUi = true)
-@Composable
-fun PreviewCommunityCard() {
-    TalkeysApkTheme {
-        CommunityCard(
-            name = "Music Lovers",
-            imageRes = R.drawable.ic_community_card ,
-            description = "Description" // Replace with your image resource
-        )
     }
 }

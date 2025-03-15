@@ -11,6 +11,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
@@ -26,80 +27,83 @@ fun EventCard(event: Event, onClick: () -> Unit) {
     Box(
         modifier = Modifier
             .width(162.dp)
-            .height(320.dp) // Increased height to ensure text fits
+            .height(320.dp)
             .clickable { onClick() }
             .shadow(
                 elevation = 4.dp,
-                ambientColor = Color(0x1AFFFFFF)
+              //  spotColor = Color(0xFF000000),
+                ambientColor = Color(0xFF212120)
             )
             .shadow(
                 elevation = 27.dp,
-                ambientColor = Color(0xFF242423)
+            //   spotColor = Color(0x40FFFFFF),
+                ambientColor = Color(0xFF1E1E1E)
             )
-            .background(color = Color(0x1AFFFFFF), shape = RoundedCornerShape(size = 15.dp))
-            .padding(6.dp) // Ensuring 6dp padding from all sides
+            .background(color = Color(0xFF1E1E1E), shape = RoundedCornerShape(15.dp))
+            .padding(6.dp) // Padding inside the box
     ) {
         Column(
-            verticalArrangement = Arrangement.spacedBy(4.dp), // 4dp space between items
-            horizontalAlignment = Alignment.Start,
             modifier = Modifier
-                .fillMaxWidth()
-                .wrapContentHeight() // Allows content to expand properly
+                .width(150.dp)
+                .height(300.dp)
         ) {
-            Image(
-                painter = painterResource(id = event.imageRes),
-                contentDescription = event.title,
-                contentScale = ContentScale.Crop, // Crop ensures image fills space correctly
+            Box(
                 modifier = Modifier
-                    .fillMaxWidth()
+                    .width(150.dp)
                     .height(250.dp)
                     .clip(RoundedCornerShape(15.dp))
-                 //   .padding(end = 6.dp)
-            )
+            ) {
+                Image(
+                    painter = painterResource(id = event.imageRes),
+                    contentDescription = event.title,
+                    contentScale = ContentScale.Crop,
+                    modifier = Modifier.fillMaxSize()
+                )
 
-            Spacer(modifier = Modifier.height(4.dp)) // Extra space between image & text
+                // ✅ Gradient Overlay for better text visibility
+                Box(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .background(
+                            Brush.verticalGradient(
+                                colors = listOf(Color.Transparent, Color.Black.copy(alpha = 0.7f)),
+                                startY = 100f
+                            )
+                        )
+                )
+            }
 
+            Spacer(modifier = Modifier.height(6.dp)) // Space between image & text
+
+            // ✅ Event Title (Now More Readable)
             Text(
                 text = event.title,
                 style = TextStyle(
                     fontSize = 16.sp,
-                    fontFamily = FontFamily(Font(R.font.urbanist_regular)),
-                    fontWeight = FontWeight(700),
-                    color = Color.White
+                    fontFamily = FontFamily(Font(R.font.urbanist_bold)),
+                    fontWeight = FontWeight.Bold,
+                    color = Color.White // White text on dark overlay
                 ),
                 modifier = Modifier
-                    .width(99.dp)
-                    .height(19.dp)
+                    .padding(horizontal = 8.dp)
+                    .fillMaxWidth()
             )
 
+            Spacer(modifier = Modifier.height(2.dp)) // Space between title & location
+
+            // ✅ Location (Now More Readable)
             Text(
                 text = event.location,
                 style = TextStyle(
                     fontSize = 14.sp,
-                    fontFamily = FontFamily(Font(R.font.urbanist_regular)),
-                    fontWeight = FontWeight(500),
-                    color = Color.White
+                    fontFamily = FontFamily(Font(R.font.urbanist_medium)),
+                    fontWeight = FontWeight.Medium,
+                    color = Color(0xFFBDBDBD) // Light gray for contrast
                 ),
                 modifier = Modifier
-                    .width(53.dp)
-                    .height(17.dp)
+                    .padding(horizontal = 8.dp)
+                    .fillMaxWidth()
             )
         }
     }
 }
-
-
-/*
-@Preview(showBackground = true, showSystemUi = true)
-@Composable
-fun PreviewEventCard() {
-    TalkeysApkTheme {
-        EventCard(
-            title = "Sunday Salsa",
-            location = "Downtown Club",
-            imageRes = R.drawable.ic_eventbanner
-        )
-    }
-}
-*/
-
