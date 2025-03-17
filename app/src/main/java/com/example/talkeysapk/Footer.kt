@@ -43,49 +43,58 @@ fun Footer(modifier: Modifier = Modifier,navController: NavController) {
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(horizontal = 24.dp),
-            horizontalArrangement = Arrangement.SpaceBetween
+            horizontalArrangement = Arrangement.SpaceBetween // Ensures equal spacing
         ) {
-            // Left Side (Team Talkeys + Address) - Shifted slightly to the left
+            // Left Side (Team Talkeys + Address)
             Column(
-                modifier = Modifier
-                    .width(197.dp)
-                    .offset(x = (-10).dp) // Move left
+                modifier = Modifier.weight(1f), // Both sides share equal weight
+                horizontalAlignment = Alignment.Start
             ) {
                 Text(
                     text = "Team Talkeys",
                     style = TextStyle(
                         fontSize = 22.sp,
-                        fontFamily = FontFamily(Font(R.font.urbanist_bold)),
+                        fontFamily = FontFamily(Font(R.font.urbanist_regular)),
                         fontWeight = FontWeight.W400,
                         color = Color(0xFFF5F5F5),
                     ),
-                    modifier = Modifier.width(144.dp).height(26.dp)
+                    modifier = Modifier.padding(bottom = 10.dp)
                 )
 
-                Spacer(modifier = Modifier.height(15.dp))
-
                 Text(
-                    text = "Address: Thapar University, Patiala, Punjab, India\n\n" +
-                            "Get in Touch: +91 98882 30798\ntalkeys11@gmail.com",
+                    text = "Address:Thapar University,\n Patiala, Punjab, India",
                     style = TextStyle(
                         fontSize = 14.sp,
-                        fontFamily = FontFamily(Font(R.font.urbanist_bold)),
+                        fontFamily = FontFamily(Font(R.font.urbanist_regular)),
                         fontWeight = FontWeight.W500,
                         color = Color(0xFFF5F5F5),
-                    ),
-                    modifier = Modifier.width(197.dp).height(85.dp)
+                    )
+                )
+
+                Spacer(modifier = Modifier.height(10.dp))
+
+                Text(
+                    text = "Get in Touch:+91 98882 30798\ntalkeys11@gmail.com",
+                    style = TextStyle(
+                        fontSize = 14.sp,
+                        fontFamily = FontFamily(Font(R.font.urbanist_regular)),
+                        fontWeight = FontWeight.W500,
+                        color = Color(0xFFF5F5F5),
+                    )
                 )
             }
 
-            // Right Side (Text Buttons) - Center aligned
+            Spacer(modifier = Modifier.width(32.dp)) // Keeps space consistent between columns
+
+            // Right Side (Buttons)
             Column(
-                modifier = Modifier.width(150.dp), // Keep some width constraint
-                horizontalAlignment = Alignment.CenterHorizontally // Center text buttons
+                modifier = Modifier.weight(1f), // Equal weight as the left side
+                horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 FooterTextButton("Contact us") { navController.navigate("contact_us") }
                 Spacer(modifier = Modifier.height(18.dp))
 
-                FooterTextButton("About us") { println("Navigating to About Us!") }
+                FooterTextButton("About us") { navController.navigate("about_us") }
                 Spacer(modifier = Modifier.height(18.dp))
 
                 FooterTextButton("Privacy Policy") { println("Navigating to Privacy Policy!") }
@@ -142,7 +151,7 @@ fun FooterTextButton(text: String, onClick: () -> Unit) {
         text = text,
         style = TextStyle(
             fontSize = 14.sp,
-            fontFamily = FontFamily(Font(R.font.urbanist_bold)),
+            fontFamily = FontFamily(Font(R.font.urbanist_regular)),
             fontWeight = FontWeight.W500,
             color = Color(0xFFF5F5F5),
         ),

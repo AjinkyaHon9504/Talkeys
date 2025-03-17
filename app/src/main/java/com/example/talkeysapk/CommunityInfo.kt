@@ -182,18 +182,12 @@ fun CommunityInfo(navController: NavController,community: HomePageCommunity) {
 
 
                         EventRow(
-                            events = listOf(
-                                Event("Sunday Salsa", "Downtown Club",  R.drawable.ic_eventbanner,"Dance"),
-                                Event("Chess Meetup", "City Library",  R.drawable.ic_eventbanner,"Board Games"),
-                                Event("Karaoke Night", "Music Lounge",  R.drawable.ic_eventbanner,"Music")
-                            ),
+                            events = Event.getAllEvents(),
                             navController = navController
                         )
                     }
                 }
             }
-
-
             item{
                 Spacer(modifier = Modifier.height(28.33.dp))
                 Footer(navController = navController)

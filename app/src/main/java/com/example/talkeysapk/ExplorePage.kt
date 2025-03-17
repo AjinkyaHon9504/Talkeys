@@ -4,6 +4,7 @@ import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.material3.*
@@ -32,24 +33,63 @@ fun ExplorePage(navController: NavController) {
     val expanded = remember { mutableStateOf(false) }
     val selectedSortOption = remember { mutableStateOf("Sort by") }
     val sortOptions = listOf("Latest", "Relevant", "Hot")
-    val communityList = CommunityData.getAllCommunities()
 
-    // Fetch event list
-    val eventList = Event.getAllEvents()
+    // Sample data for user messages
+    val userMessages = remember {
+        mutableStateOf(
+            listOf(
+                UserMessage(
+                    id = "1",
+                    senderName = "Ramesh Kumar",
+                    content = "Lorem ipsum dolor sit amet consectetur.",
+                    likes = 183,
+                    replies = 8,
+                    timestamp = 1616161616161
+                ),
+                UserMessage(
+                    id = "2",
+                    senderName = "Sita Verma",
+                    content = "Pellentesque habitant morbi tristique.",
+                    likes = 150,
+                    replies = 15,
+                    timestamp = 1717171717171
+                ),
+                UserMessage(
+                    id = "3",
+                    senderName = "Rahul Das",
+                    content = "Phasellus viverra nulla ut metus varius.",
+                    likes = 90,
+                    replies = 5,
+                    timestamp = 1515151515151
+                )
+            )
+        )
+    }
+
+    // Apply sorting logic when sort option changes
+    LaunchedEffect(selectedSortOption.value) {
+        userMessages.value = when (selectedSortOption.value) {
+            "Latest" -> userMessages.value.sortedByDescending { it.timestamp }
+            "Hot" -> userMessages.value.sortedWith(
+                compareByDescending<UserMessage> { it.likes }.thenByDescending { it.replies }
+            )
+            else -> userMessages.value
+        }
+    }
 
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(Brush.verticalGradient(colors = listOf(Color.White, Color.LightGray))) // Example gradient background
+            .background(Brush.verticalGradient(colors = listOf(Color.White, Color.LightGray)))
             .paint(
-                painter = painterResource(id = R.drawable.background), // Add background image
+                painter = painterResource(id = R.drawable.background),
                 contentScale = ContentScale.Crop
             )
     ) {
         Column(
             modifier = Modifier.fillMaxSize()
         ) {
-            // Top Bar - Non-scrollable
+            // Top Bar
             HomeTopBar()
 
             // Scrollable Content
@@ -114,7 +154,7 @@ fun ExplorePage(navController: NavController) {
                             }
                         }
 
-                        // Search Box (Text Aligned Left, Search Icon to the Right)
+                        // Search Box
                         Box(
                             modifier = Modifier
                                 .width(224.dp)
@@ -137,7 +177,7 @@ fun ExplorePage(navController: NavController) {
                                         fontWeight = FontWeight(300),
                                         color = Color.White
                                     ),
-                                    modifier = Modifier.weight(1f) // This ensures text expands and aligns left
+                                    modifier = Modifier.weight(1f)
                                 )
 
                                 if (searchQuery.value.isEmpty()) {
@@ -147,8 +187,7 @@ fun ExplorePage(navController: NavController) {
                                             fontSize = 14.sp,
                                             fontFamily = FontFamily(Font(R.font.urbanist_regular)),
                                             fontWeight = FontWeight(300),
-                                            color = Color(0xFFA3A3A3),
-                                            textAlign = TextAlign.Left
+                                            color = Color(0xFFA3A3A3)
                                         )
                                     )
                                 }
@@ -160,24 +199,25 @@ fun ExplorePage(navController: NavController) {
                                     modifier = Modifier
                                         .size(18.dp)
                                         .clickable { /* Handle search */ }
-
                                 )
                             }
                         }
-
                     }
+
                     Spacer(modifier = Modifier.height(17.5.dp))
+
                     // LazyRow for User Messages
                     LazyRow(
                         contentPadding = PaddingValues(horizontal = 19.dp),
                         horizontalArrangement = Arrangement.spacedBy(8.dp)
                     ) {
-                        items(5) { // Replace with actual user messages
-                            UserMessageBox()
+                        items(userMessages.value) { message ->
+                            UserMessageBox(message)
                         }
                     }
 
                     Spacer(modifier = Modifier.height(34.5.dp))
+
                     // Explore Events Section
                     Text(
                         text = "Explore Events",
@@ -192,9 +232,7 @@ fun ExplorePage(navController: NavController) {
                     )
 
                     Spacer(modifier = Modifier.height(14.dp))
-
-                    // Fix EventRow() issue by passing real event list
-                    EventRow(events = eventList, navController = navController)
+                    EventRow(events = Event.getAllEvents(), navController = navController)
 
                     Spacer(modifier = Modifier.height(32.dp))
 
@@ -212,9 +250,9 @@ fun ExplorePage(navController: NavController) {
                     )
 
                     Spacer(modifier = Modifier.height(14.dp))
-                    CommunityRow(communityList, navController) // Call CommunityRow()
+                    CommunityRow(CommunityData.getAllCommunities(), navController)
 
-                    Spacer(modifier = Modifier.height(40.dp)) // Spacer with 40dp padding
+                    Spacer(modifier = Modifier.height(40.dp))
 
                     // Footer
                     Footer(navController = navController)
@@ -224,9 +262,12 @@ fun ExplorePage(navController: NavController) {
     }
 }
 
-
 @Composable
-fun UserMessageBox() {
+fun UserMessageBox(message: UserMessage) {
+
+    var isLiked by remember { mutableStateOf(false) }
+    var likeCount by remember { mutableIntStateOf(message.likes) }
+
     Box(
         modifier = Modifier
             .width(224.dp)
@@ -249,7 +290,7 @@ fun UserMessageBox() {
                 )
                 Spacer(modifier = Modifier.width(10.dp))
                 Text(
-                    text = "Ramesh Kumar",
+                    text = message.senderName,
                     style = TextStyle(
                         fontSize = 16.sp,
                         fontFamily = FontFamily(Font(R.font.urbanist_regular)),
@@ -261,14 +302,13 @@ fun UserMessageBox() {
 
             // Message Text
             Text(
-                text = "Lorem ipsum dolor sit amet consectetur. Risus id . urife fnji ue wf jidks uiewb fj y4uwhel oiewibo ohwfebjk 2huweij 23huibweh 23uih32p",
+                text = message.content,
                 style = TextStyle(
                     fontSize = 14.sp,
                     fontFamily = FontFamily(Font(R.font.urbanist_regular)),
                     fontWeight = FontWeight(300),
                     color = Color.White
-                ),
-              //  modifier = Modifier.width(166.dp)
+                )
             )
 
             // Like, Comment, Share Buttons
@@ -276,15 +316,18 @@ fun UserMessageBox() {
                 horizontalArrangement = Arrangement.spacedBy(16.dp),
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                TextButton(onClick = { /* Handle Like */ }) {
+                TextButton(onClick = {
+                    isLiked = !isLiked
+                    likeCount += if (isLiked) 1 else -1
+                }) {
                     Icon(
                         painter = painterResource(id = R.drawable.ic_like),
                         contentDescription = "Like",
-                        tint = Color.White,
-                        modifier = Modifier.size(24.dp) // Increased size
+                        tint = if (isLiked) Color.Red else Color.White, // Change color when liked
+                        modifier = Modifier.size(24.dp)
                     )
                     Spacer(modifier = Modifier.width(4.dp))
-                    Text(text = "183", color = Color.White)
+                    Text(text = "$likeCount", color = Color.White)
                 }
 
                 TextButton(onClick = { /* Handle Comment */ }) {
@@ -295,7 +338,7 @@ fun UserMessageBox() {
                         modifier = Modifier.size(24.dp)
                     )
                     Spacer(modifier = Modifier.width(4.dp))
-                    Text(text = "8", color = Color.White)
+                    Text(text = "${message.replies}", color = Color.White)
                 }
 
                 TextButton(onClick = { /* Handle Share */ }) {
@@ -306,13 +349,26 @@ fun UserMessageBox() {
                         modifier = Modifier.size(24.dp)
                     )
                     Spacer(modifier = Modifier.width(4.dp))
-                    Text(text = "12", color = Color.White)
+                    Text(text = "Share", color = Color.White)
                 }
             }
 
             // Replies & Likes Info
-            Text(text = "8 replies • 183 likes", color = Color.White, fontSize = 14.sp)
+            Text(
+                text = "${message.replies} replies • $likeCount likes",
+                color = Color.White,
+                fontSize = 14.sp
+            )
         }
     }
 }
+data class UserMessage(
+    val id: String,
+    val senderName: String,
+    val content: String,
+    val likes: Int,
+    val replies: Int,
+    val timestamp: Long
+)
+
 

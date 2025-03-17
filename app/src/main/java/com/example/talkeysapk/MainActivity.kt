@@ -38,6 +38,9 @@ fun AppNavigation() {
         composable("communities") { CommunitiesScreen(navController) }
         composable("explore") { ExplorePage(navController) }
         composable("contact_us") { ContactUsScreen(navController) }
+        composable("about_us") { AboutUsScreen(navController) }
+        composable("create_event") { CreateEventScreen(navController) }
+
 
         composable(
             "eventDetail/{eventTitle}",
@@ -49,9 +52,8 @@ fun AppNavigation() {
             val event = Event.getEventByTitle(eventTitle)
 
             if (event != null) {
-                EventDetailScreen( event,navController)
+                EventDetailScreen(event,navController)
             } else {
-                // Handle event not found case (e.g., navigate back)
                 navController.popBackStack()
             }
         }

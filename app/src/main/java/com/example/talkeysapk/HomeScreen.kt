@@ -70,8 +70,8 @@ fun HomeScreen(navController: NavController) {
            //     item{ Spacer(modifier = Modifier.padding(10.dp)) }
                 item { CategoryTitle("Influencers Shaping the Community") }
                 item { InfluencerRow() }
-                item { HostYourOwnEvent() }
-                item { Footer(modifier = Modifier.fillMaxWidth(),navController = navController) }
+                item { HostYourOwnEvent(navController) }
+                item { Footer(modifier = Modifier.align(Alignment.BottomCenter),navController = navController) }
             }
 
             // ✅ Bottom Bar stays fixed
@@ -86,7 +86,7 @@ fun HomeScreen(navController: NavController) {
 }
 
 @Composable
-fun HostYourOwnEvent() {
+fun HostYourOwnEvent(navController: NavController) {
 
         Row(
             modifier = Modifier
@@ -136,7 +136,7 @@ fun HostYourOwnEvent() {
                         .width(130.dp)
                         .height(45.dp)
                         .background(color = Color(0xFF8A44CB), shape = RoundedCornerShape(8.dp))
-                        .clickable { /* Navigate to event creation */ },
+                        .clickable { navController.navigate("create_event")},
                     contentAlignment = Alignment.Center
                 ) {
                     Text(
@@ -189,7 +189,8 @@ fun BannerSection(navController: NavController) {
                     Color.Black.copy(alpha = 0.8f),
                     RoundedCornerShape(12.dp)
                 )
-                .padding(16.dp),
+                .padding(16.dp)
+                .width(122.dp),
             contentAlignment = Alignment.Center
         ) {
             Column(horizontalAlignment = Alignment.CenterHorizontally) {
@@ -216,13 +217,16 @@ fun BannerSection(navController: NavController) {
                 Spacer(modifier = Modifier.height(12.dp))
 
                 Row(
+                    modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.spacedBy(8.dp, Alignment.CenterHorizontally),
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     Button(
                         onClick = { navController.navigate("events") },
-                        modifier = Modifier.width(150.dp).height(48.dp)
-                            .weight(1f),
+                        modifier = Modifier
+                           // .widthIn(150.dp)
+                            .height(48.dp)
+                            .width(143.dp),
                         shape = RoundedCornerShape(8.dp),
                         colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF8A44CB))
                     ) {
@@ -236,7 +240,10 @@ fun BannerSection(navController: NavController) {
 
                     Button(
                         onClick = { navController.navigate("communities") },
-                        modifier = Modifier.width(200.dp).height(48.dp) .weight(1.2f) ,
+                        modifier = Modifier
+                         //   .widthIn(200.dp)
+                            .height(48.dp)
+                            .width(190.dp),
                         shape = RoundedCornerShape(8.dp),
                         colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF8A44CB))
                     ) {
@@ -407,5 +414,16 @@ fun InfluencerRow() {
                 imageRes = influencer.imageResId
             )
         }
+    }
+}
+@Composable
+fun FooterWrapper(navController: NavController) {
+    Box(
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(240.dp) // Set a fixed height for the Footer
+            .background(Color.Black) // Ensure background matches
+    ) {
+        Footer(navController = navController)
     }
 }

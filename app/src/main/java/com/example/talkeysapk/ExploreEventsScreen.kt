@@ -12,6 +12,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
@@ -30,19 +32,27 @@ fun ExploreEventsScreen(navController: NavController) {
     val sportsEvents = allEvents.filter { it.category == "Sports" }
 
     Box(modifier = Modifier.fillMaxSize()) {
+
+        Image(
+            painter = painterResource(id = R.drawable.background), // Replace with your image resource
+            contentDescription = "Background",
+            modifier = Modifier.fillMaxSize(),
+            contentScale = ContentScale.Crop
+        )
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .background(Color.Black)
                 .padding(bottom = 56.dp)
         ) {
             // Top Bar
             HomeTopBar()
 
+
             LazyColumn(
                 modifier = Modifier.fillMaxSize(),
                 verticalArrangement = Arrangement.spacedBy(12.dp)
             ) {
+                item{Spacer(Modifier.padding(2.dp))}
                 item {
                     Text(
                         text = "Explore Events",
@@ -56,7 +66,7 @@ fun ExploreEventsScreen(navController: NavController) {
                     )
                 }
 
-                item { Spacer(modifier = Modifier.height(4.dp)) }
+                item { Spacer(modifier = Modifier.height(1.dp)) }
 
                 // Category 1: Tech Events
                 if (techEvents.isNotEmpty()) {

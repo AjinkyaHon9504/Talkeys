@@ -24,6 +24,9 @@ import androidx.navigation.compose.rememberNavController
 
 @Composable
 fun BottomBar(navController: NavController, scrollState: ScrollState, modifier: Modifier = Modifier) {
+    var selectedDestination by remember { mutableStateOf("home") } // Default to home
+    val currentRoute = navController.currentBackStackEntryFlow.collectAsState(initial = navController.currentDestination?.route)
+
     val backgroundColor by animateColorAsState(
         targetValue = if (scrollState.value > 100) Color.Black.copy(alpha = 0.3f)
         else Color.White.copy(alpha = 0.1f),
@@ -31,8 +34,8 @@ fun BottomBar(navController: NavController, scrollState: ScrollState, modifier: 
     )
 
     Box(
-        modifier = Modifier
-            .fillMaxWidth()
+        modifier = modifier
+         //   .fillMaxWidth()
             .height(70.dp)
             .offset(y = (-20).dp)
             .padding(bottom = 16.dp)
@@ -59,39 +62,33 @@ fun BottomBar(navController: NavController, scrollState: ScrollState, modifier: 
                 .padding(horizontal = 25.dp)
         ) {
             val icons = listOf(
-                R.drawable.ic_community_icon,
-                R.drawable.ic_events_icon,
-                R.drawable.ic_home_icon,
-                R.drawable.ic_search_icon,
-                R.drawable.ic_globe_icon
+                R.drawable.ic_community_icon to "communities",
+                R.drawable.ic_events_icon to "events",
+                R.drawable.ic_home_icon to "home",
+                R.drawable.ic_search_icon to "explore",
+                R.drawable.ic_globe_icon to "" // No navigation, just an icon
             )
 
-            val destinations = listOf(
-                "communities",
-                "events",
-                "home",
-                "explore",
-                ""
-            )
+            icons.forEach { (icon, destination) ->
+                val isSelected = currentRoute.value == destination
+                val iconColor = if (isSelected) Color(0xFFAC6FE4) else Color.White
 
-            icons.zip(destinations).forEach { (icon, destination) ->
                 Icon(
                     painter = painterResource(id = icon),
                     contentDescription = "Navigation Icon",
                     modifier = Modifier
                         .size(30.dp)
                         .clickable {
-                            if (destination.isNotEmpty()) {
+                            if (destination.isNotEmpty() && destination != currentRoute.value) {
                                 navController.navigate(destination)
                             }
                         },
-                    tint = Color.White
+                    tint = iconColor
                 )
             }
         }
     }
 }
-
 @Preview(showBackground = true)
 @Composable
 fun FloatingBottomBarPreview() {

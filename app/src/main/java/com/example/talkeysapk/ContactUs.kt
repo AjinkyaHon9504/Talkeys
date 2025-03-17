@@ -48,7 +48,8 @@ fun ContactUsScreen(navController: NavController) {
             Column(
                 modifier = Modifier
                     .fillMaxSize()
-                    .verticalScroll(scrollState)
+                    .verticalScroll(scrollState),
+                horizontalAlignment = Alignment.CenterHorizontally
             ) {
        //         Spacer(modifier = Modifier.height(64.5.dp)) // Extra spacing if needed
 
@@ -89,7 +90,7 @@ fun ContactUsScreen(navController: NavController) {
                     )
                 }
 
-                Spacer(modifier = Modifier.height(32.dp))
+                Spacer(modifier = Modifier.height(15.dp))
 
                 // Subheading
                 Text(
@@ -136,13 +137,13 @@ fun ContactUsScreen(navController: NavController) {
                     Text(
                         text = "Send Message",
                         style = TextStyle(
-                            fontSize = 16.sp,
+                            fontSize = 14.sp,
                             fontFamily = FontFamily(Font(R.font.urbanist_medium)),
                             color = Color.White,
-                            textAlign = TextAlign.Start
+                            textAlign = TextAlign.Center
                         ),
                         modifier = Modifier
-                            .width(115.dp)
+                            .width(125.dp)
                             .height(19.dp)
                     )
                 }
@@ -168,7 +169,7 @@ fun ContactField(label: String, placeholder: String, height: Dp = 56.dp) {
                 fontSize = 14.sp,
                 lineHeight = 22.4.sp,
                 fontFamily = FontFamily(Font(R.font.open_sans)),
-                fontWeight = FontWeight.Normal,
+                fontWeight = FontWeight.Medium,
                 color = Color(0xFFF5F5F5)
             ),
             modifier = Modifier
