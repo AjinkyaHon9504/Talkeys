@@ -1,4 +1,5 @@
 package com.example.talkeysapk
+
 import androidx.compose.foundation.background
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
@@ -27,7 +28,7 @@ import androidx.navigation.NavController
 import com.example.talkies.ui.HomeTopBar
 
 @Composable
-fun CreateEventScreen(navController: NavController) {
+fun EventRegistraion(navController: NavController) {
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -50,14 +51,13 @@ fun CreateEventScreen(navController: NavController) {
             Spacer(modifier = Modifier.height(9.dp))
 
             Text(
-                text = "Create Event",
+                text = "Event Registration",
                 style = TextStyle(
                     fontSize = 34.sp,
                     fontFamily = FontFamily(Font(R.font.urbanist_semibold)),
                     color = Color.White
                 ),
                 modifier = Modifier
-                    .width(198.dp)
                     .height(41.dp)
                     .align(Alignment.Start)
             )
@@ -70,20 +70,20 @@ fun CreateEventScreen(navController: NavController) {
             }
 
             Spacer(modifier = Modifier.height(15.dp))
-                Box(
-                    modifier = Modifier
-                        .padding(start=85.dp)
-                        .width(150.dp)
-                        .height(39.dp)
-                        .background(color = Color(0xFF8A44CB), shape = RoundedCornerShape(8.dp))
-                        .clickable {  navController.navigate("event_created_successfully")},
-                    contentAlignment = Alignment.Center
-                ) {
-                    Text(
-                        text = "Create Event",
-                        fontSize = 16.sp,
-                        color = Color.White,
-                    )
+            Box(
+                modifier = Modifier
+                    .padding(start=85.dp)
+                    .width(200.dp)
+                    .height(39.dp)
+                    .background(color = Color(0xFF8A44CB), shape = RoundedCornerShape(8.dp))
+                    .clickable {  navController.navigate("registration_success")},
+                contentAlignment = Alignment.Center
+            ) {
+                Text(
+                    text = "Register Now",
+                    fontSize = 16.sp,
+                    color = Color.White,
+                )
             }
 
             Spacer(modifier = Modifier.height(20.dp))
@@ -93,34 +93,3 @@ fun CreateEventScreen(navController: NavController) {
     }
 }
 
-@Composable
-fun EventInputField(label: String) {
-    Column {
-        Text(
-            text = label,
-            style = TextStyle(
-                fontSize = 27.sp,
-                fontFamily = FontFamily(Font(R.font.urbanist_regular)),
-                color = Color.White
-            )
-        )
-
-        Spacer(modifier = Modifier.height(12.dp))
-
-        var textState by remember { mutableStateOf(TextFieldValue("")) }
-
-        Box(
-            modifier = Modifier
-                .width(327.dp)
-                .height(45.dp)
-                .background(Color(0xFF262626), shape = RoundedCornerShape(10.dp))
-                .padding(10.dp)
-        ) {
-            BasicTextField(
-                value = textState,
-                onValueChange = { textState = it },
-                textStyle = TextStyle(color = Color.White, fontSize = 16.sp)
-            )
-        }
-    }
-}

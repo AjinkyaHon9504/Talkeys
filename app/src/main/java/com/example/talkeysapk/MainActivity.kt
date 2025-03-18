@@ -40,6 +40,9 @@ fun AppNavigation() {
         composable("contact_us") { ContactUsScreen(navController) }
         composable("about_us") { AboutUsScreen(navController) }
         composable("create_event") { CreateEventScreen(navController) }
+        composable("registration_success") { RegistrationSuccessScreen(navController) }
+        composable("event_registration") { EventRegistraion(navController) }
+        composable("event_created_successfully") { EventVerificationScreen(navController) }
 
 
         composable(

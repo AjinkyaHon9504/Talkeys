@@ -36,7 +36,6 @@ fun Footer(modifier: Modifier = Modifier,navController: NavController) {
                 .height(0.8.dp)
                 .background(color = Color.White)
         )
-
         Spacer(modifier = Modifier.height(8.dp))
 
         Row(
@@ -143,7 +142,6 @@ fun Footer(modifier: Modifier = Modifier,navController: NavController) {
         )
     }
 }
-
 // ✅ Footer Text Button with Clickable Action (Kept as is)
 @Composable
 fun FooterTextButton(text: String, onClick: () -> Unit) {

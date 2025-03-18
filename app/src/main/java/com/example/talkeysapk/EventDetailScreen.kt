@@ -36,7 +36,7 @@ import com.example.talkies.ui.HomeTopBar
 import kotlinx.coroutines.delay
 
 @Composable
-fun EventDetailScreen(event: Event,navController: NavController) {
+fun EventDetailScreen(event: Event,navController:NavController) {
     var selectedItem by remember { mutableStateOf("Details") }
 
     val items = listOf(
@@ -103,7 +103,7 @@ fun EventDetailScreen(event: Event,navController: NavController) {
             item { Spacer(modifier = Modifier.height(5.33.dp)) }
 
             item {
-                EventInfoBox()
+                EventInfoBox(navController=navController)
             }
 
             item {
@@ -283,7 +283,7 @@ fun VerticalIndicator1() {
 }
 
 @Composable
-fun EventInfoBox(modifier: Modifier = Modifier) {
+fun EventInfoBox(modifier: Modifier = Modifier,navController: NavController) {
 
     var isLiked by remember { mutableStateOf(false) }
     var likeCount by remember { mutableStateOf(183) } // Initial likes
@@ -365,7 +365,8 @@ fun EventInfoBox(modifier: Modifier = Modifier) {
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.End // Aligns the button to the right
                 ) {
-                    RegisterButton()
+                    RegisterButton(navController = navController)
+
                 }
 
 
@@ -473,13 +474,13 @@ fun EventTag(text: String, isBigger: Boolean = false) {
 }
 
 @Composable
-fun RegisterButton() {
+fun RegisterButton(navController: NavController) {
     Box(
         modifier = Modifier
             .width(133.dp)
             .height(39.dp)
             .background(Color(0xFF8A44CB), shape = RoundedCornerShape(8.dp))
-            .clickable { }
+            .clickable { navController.navigate("event_registration") }
             .padding(10.dp),
         contentAlignment = Alignment.Center
     ) {
