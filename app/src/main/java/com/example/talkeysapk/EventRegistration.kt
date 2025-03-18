@@ -46,7 +46,7 @@ fun EventRegistraion(navController: NavController) {
                 .padding(horizontal = 20.dp)
                 .verticalScroll(rememberScrollState())
         ) {
-            HomeTopBar()
+            HomeTopBar(navController = navController)
 
             Spacer(modifier = Modifier.height(9.dp))
 

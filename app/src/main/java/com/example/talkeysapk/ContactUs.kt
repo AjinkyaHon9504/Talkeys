@@ -28,7 +28,7 @@ fun ContactUsScreen(navController: NavController) {
     Scaffold(
         topBar = {
             // HomeTopBar inside the Scaffold
-            HomeTopBar()
+            HomeTopBar(navController = navController)
         }
     ) { paddingValues ->
         Box(

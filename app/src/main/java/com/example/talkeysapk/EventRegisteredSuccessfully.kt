@@ -44,7 +44,7 @@ fun RegistrationSuccessScreen(navController: NavController) {
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             // Top bar
-            HomeTopBar()
+            HomeTopBar(navController = navController)
 
             // Spacer after top bar
             Spacer(modifier = Modifier.height(88.dp))

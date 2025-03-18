@@ -39,7 +39,7 @@ fun HomeScreen(navController: NavController) {
     val communityList = CommunityData.getAllCommunities()
 
     Scaffold(
-        topBar = { HomeTopBar() } // ✅ Keeps TopBar fixed
+        topBar = { HomeTopBar(navController = navController) } // ✅ Keeps TopBar fixed
     ) { paddingValues ->
         Box(
             modifier = Modifier

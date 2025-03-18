@@ -48,7 +48,7 @@ fun EventVerificationScreen(navController: NavController) {
             modifier = Modifier.fillMaxSize(),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            HomeTopBar()
+            HomeTopBar(navController = navController)
 
             Spacer(modifier = Modifier.height(98.dp))
 

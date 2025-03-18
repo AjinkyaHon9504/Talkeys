@@ -46,7 +46,7 @@ fun CommunityInfo(navController: NavController,community: HomePageCommunity) {
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             item {
-                HomeTopBar()
+                HomeTopBar(navController = navController)
                 Spacer(modifier = Modifier.height(22.dp))
             }
 

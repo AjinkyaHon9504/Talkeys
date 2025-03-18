@@ -45,7 +45,7 @@ fun ExploreEventsScreen(navController: NavController) {
                 .padding(bottom = 56.dp)
         ) {
             // Top Bar
-            HomeTopBar()
+            HomeTopBar(navController = navController)
 
 
             LazyColumn(

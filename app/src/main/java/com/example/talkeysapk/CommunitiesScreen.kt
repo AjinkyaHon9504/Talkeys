@@ -43,7 +43,7 @@ fun CommunitiesScreen(navController: NavController) {
                 .padding(bottom = 56.dp) // Padding for BottomBar
         ) {
             // Top Bar
-            HomeTopBar()
+            HomeTopBar(navController = navController)
 
             LazyColumn(
                 modifier = Modifier.fillMaxSize(),

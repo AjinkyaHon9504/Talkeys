@@ -90,7 +90,7 @@ fun ExplorePage(navController: NavController) {
             modifier = Modifier.fillMaxSize()
         ) {
             // Top Bar
-            HomeTopBar()
+            HomeTopBar(navController = navController)
 
             // Scrollable Content
             LazyColumn(

@@ -56,7 +56,7 @@ fun EventDetailScreen(event: Event,navController:NavController) {
         )
 
         LazyColumn(modifier = Modifier.fillMaxSize()) {
-            item { HomeTopBar() }
+            item { HomeTopBar(navController = navController) }
 
             item {
                 Card(

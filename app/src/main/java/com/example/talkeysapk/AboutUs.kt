@@ -43,7 +43,7 @@ fun AboutUsScreen(navController: NavController) {
                 .padding(horizontal = 20.dp)
                 .verticalScroll(rememberScrollState())
         ) {
-            HomeTopBar()
+            HomeTopBar(navController)
 
             Spacer(modifier = Modifier.height(20.dp))
 
