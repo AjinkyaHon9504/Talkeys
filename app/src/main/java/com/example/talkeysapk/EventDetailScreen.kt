@@ -10,9 +10,11 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -20,7 +22,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
@@ -36,7 +37,7 @@ import com.example.talkies.ui.HomeTopBar
 import kotlinx.coroutines.delay
 
 @Composable
-fun EventDetailScreen(event: Event,navController:NavController) {
+fun EventDetailScreen(event: Event,navController: NavController) {
     var selectedItem by remember { mutableStateOf("Details") }
 
     val items = listOf(
@@ -47,102 +48,116 @@ fun EventDetailScreen(event: Event,navController:NavController) {
         listOf(selectedItem) + items.filter { it != selectedItem }
     }
 
-    Box(modifier = Modifier.fillMaxSize()) {
-        Image(
-            painter = painterResource(id = R.drawable.background),
-            contentDescription = null,
-            contentScale = ContentScale.Crop,
-            modifier = Modifier.fillMaxSize()
-        )
+    Scaffold(
+        topBar = { HomeTopBar(navController = navController) } // ✅ Keeps TopBar fixed
+    ) {paddingValues ->
+        Box(
+            modifier = Modifier.
+            fillMaxSize().
+            padding(paddingValues)
+        ) {
+            Image(
+                painter = painterResource(id = R.drawable.background),
+                contentDescription = null,
+                contentScale = ContentScale.Crop,
+                modifier = Modifier.fillMaxSize()
+            )
 
-        LazyColumn(modifier = Modifier.fillMaxSize()) {
-            item { HomeTopBar(navController = navController) }
-
-            item {
-                Card(
-                    modifier = Modifier
-                        .width(418.dp)
-                        .height(266.66501.dp)
-                        .padding(top = 34.dp, start = 20.dp),
-                    colors = CardDefaults.cardColors(containerColor = Color.Transparent)
-                ) {
-                    Row(
-                        horizontalArrangement = Arrangement.spacedBy(10.dp, Alignment.CenterHorizontally),
-                        verticalAlignment = Alignment.CenterVertically,
-                        modifier = Modifier.padding(16.dp)
+            LazyColumn(modifier = Modifier.fillMaxSize(),contentPadding = PaddingValues(bottom = 100.dp)) {
+                item {
+                    Card(
+                        modifier = Modifier
+                            .width(418.dp)
+                            .height(266.66501.dp)
+                            .padding(top = 34.dp, start = 20.dp),
+                        colors = CardDefaults.cardColors(containerColor = Color.Transparent)
                     ) {
-                        EventCard1(
-                            title = event.title,
-                            location = event.location,
-                            imageRes = event.imageRes
-                        )
-                        Column {
-                            Text(
-                                text = event.title,
-                                style = TextStyle(
-                                    fontSize = 22.sp,
-                                    fontFamily = FontFamily(Font(R.font.urbanist_bold)), // Bold for event name
-                                    fontWeight = FontWeight.Bold,
-                                    color = Color.White
-                                )
+                        Row(
+                            horizontalArrangement = Arrangement.spacedBy(10.dp, Alignment.CenterHorizontally),
+                            verticalAlignment = Alignment.CenterVertically,
+                            modifier = Modifier.padding(16.dp)
+                        ) {
+                            EventCard1(
+                                title = event.title,
+                                location = event.location,
+                                imageRes = event.imageRes
                             )
-                            Spacer(modifier = Modifier.height(10.dp))
+                            Column {
+                                Text(
+                                    text = event.title,
+                                    style = TextStyle(
+                                        fontSize = 22.sp,
+                                        fontFamily = FontFamily(Font(R.font.urbanist_bold)), // Bold for event name
+                                        fontWeight = FontWeight.Bold,
+                                        color = Color.White
+                                    )
+                                )
+                                Spacer(modifier = Modifier.height(10.dp))
 
-                            EventDetailRow(R.drawable.college, event.category) // Use category as college name
-                            Spacer(modifier = Modifier.height(10.dp))
-                            EventDetailRow(R.drawable.ic_location, event.location) // Use event location dynamically
-                            Spacer(modifier = Modifier.height(10.dp))
-                            EventDetailRow(R.drawable.event_date,event.date) // Replace with event date if available
-                            Spacer(modifier = Modifier.height(10.dp))
-                            EventDetailRow(R.drawable.trophy, event.festName.toString()) // Update with fest name if available
+                                EventDetailRow(R.drawable.college, event.category) // Use category as college name
+                                Spacer(modifier = Modifier.height(10.dp))
+                                EventDetailRow(R.drawable.ic_location, event.location) // Use event location dynamically
+                                Spacer(modifier = Modifier.height(10.dp))
+                                EventDetailRow(R.drawable.event_date,event.date) // Replace with event date if available
+                                Spacer(modifier = Modifier.height(10.dp))
+                                EventDetailRow(R.drawable.trophy, event.festName.toString()) // Update with fest name if available
+                            }
                         }
                     }
                 }
-            }
 
-            item { Spacer(modifier = Modifier.height(5.33.dp)) }
+                item { Spacer(modifier = Modifier.height(5.33.dp)) }
 
-            item {
-                EventInfoBox(navController=navController)
-            }
-
-            item {
-                Spacer(modifier = Modifier.height(20.dp))
-                SelectionBar(items, selectedItem) { selectedItem = it }
-                Spacer(modifier = Modifier.height(33.dp))
-            }
-
-            val highlightColor = Color(0xFF8A44CB) // Highlight color
-            val normalColor = Color(0xFF171717) // Default color
-
-            items(reorderedItems) { item ->
-                val isHighlighted = item == selectedItem
-                var showHighlight by remember { mutableStateOf(isHighlighted) }
-
-                // Animate color change
-                val backgroundColor by animateColorAsState(
-                    targetValue = if (showHighlight) highlightColor else normalColor,
-                    animationSpec = tween(durationMillis = 500),
-                    label = "Card Background Animation"
-                )
-
-                LaunchedEffect(selectedItem) {
-                    if (isHighlighted) {
-                        showHighlight = true // Show highlight
-                        delay(2000) // Keep highlight for a moment
-                        showHighlight = false // Revert color after delay
-                    }
+                item {
+                    EventInfoBox()
                 }
 
-                InfoCard1(
-                    title = item,
-                    content = "Lorem ipsum",
-                    backgroundColor = backgroundColor // Pass animated color
-                )
+                item {
+                    Spacer(modifier = Modifier.height(20.dp))
+                    SelectionBar(items, selectedItem) { selectedItem = it }
+                    Spacer(modifier = Modifier.height(33.dp))
+                }
 
-                Spacer(modifier = Modifier.height(30.dp))
+                val highlightColor = Color(0xFF8A44CB) // Highlight color
+                val normalColor = Color(0xFF171717) // Default color
+
+                items(reorderedItems) { item ->
+                    val isHighlighted = item == selectedItem
+                    var showHighlight by remember { mutableStateOf(isHighlighted) }
+
+                    // Animate color change
+                    val backgroundColor by animateColorAsState(
+                        targetValue = if (showHighlight) highlightColor else normalColor,
+                        animationSpec = tween(durationMillis = 500),
+                        label = "Card Background Animation"
+                    )
+
+                    LaunchedEffect(selectedItem) {
+                        if (isHighlighted) {
+                            showHighlight = true // Show highlight
+                            delay(2000) // Keep highlight for a moment
+                            showHighlight = false // Revert color after delay
+                        }
+                    }
+
+                    InfoCard1(
+                        title = item,
+                        content = "Lorem ipsum",
+                        backgroundColor = backgroundColor // Pass animated color
+                    )
+
+                    Spacer(modifier = Modifier.height(30.dp))
+                }
+                item { Footer(navController = rememberNavController()) }
             }
-            item { Footer(navController = rememberNavController()) }
+
+            BottomBar(
+                navController,
+                modifier = Modifier
+                    .align(Alignment.BottomCenter)
+                    .fillMaxWidth(), scrollState = rememberScrollState()
+            )
+
         }
     }
 }
@@ -283,11 +298,7 @@ fun VerticalIndicator1() {
 }
 
 @Composable
-fun EventInfoBox(modifier: Modifier = Modifier,navController: NavController) {
-
-    var isLiked by remember { mutableStateOf(false) }
-    var likeCount by remember { mutableStateOf(183) } // Initial likes
-
+fun EventInfoBox(modifier: Modifier = Modifier) {
     Card(
         modifier = modifier
             .width(370.dp)
@@ -328,31 +339,9 @@ fun EventInfoBox(modifier: Modifier = Modifier,navController: NavController) {
                     // Icons Row
                     Row(
                         horizontalArrangement = Arrangement.spacedBy(12.dp),
-                        verticalAlignment = Alignment.CenterVertically
+                        verticalAlignment = Alignment.CenterVertically // Ensures all items align properly
                     ) {
-                        // Like Button with Clickable Icon
-                        Column(
-                            horizontalAlignment = Alignment.CenterHorizontally,
-                            modifier = Modifier.clickable {
-                                isLiked = !isLiked
-                                likeCount = if (isLiked) likeCount + 1 else likeCount - 1
-                            }
-                        ) {
-                            Image(
-                                painter = painterResource(id = R.drawable.ic_like),
-                                contentDescription = "Like",
-                                modifier = Modifier.size(20.dp),
-                                colorFilter = ColorFilter.tint(if (isLiked) Color.Red else Color.White)
-                            )
-                            Text(
-                                text = "$likeCount likes",
-                                color = Color.White,
-                                fontSize = 12.sp,
-                                fontFamily = FontFamily(Font(R.font.urbanist_light)),
-                                textAlign = TextAlign.Center
-                            )
-                        }
-
+                        IconWithText(R.drawable.ic_like, "183 likes")
                         IconWithText(R.drawable.ic_comment, "•") // Empty text instead of missing text
                         IconWithText(R.drawable.ic_share, "8 replies")
                     }
@@ -365,8 +354,7 @@ fun EventInfoBox(modifier: Modifier = Modifier,navController: NavController) {
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.End // Aligns the button to the right
                 ) {
-                    RegisterButton(navController = navController)
-
+                    RegisterButton()
                 }
 
 
@@ -474,13 +462,13 @@ fun EventTag(text: String, isBigger: Boolean = false) {
 }
 
 @Composable
-fun RegisterButton(navController: NavController) {
+fun RegisterButton() {
     Box(
         modifier = Modifier
             .width(133.dp)
             .height(39.dp)
             .background(Color(0xFF8A44CB), shape = RoundedCornerShape(8.dp))
-            .clickable { navController.navigate("event_registration") }
+            .clickable { }
             .padding(10.dp),
         contentAlignment = Alignment.Center
     ) {
