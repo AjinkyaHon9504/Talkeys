@@ -96,10 +96,11 @@ fun Footer(modifier: Modifier = Modifier,navController: NavController) {
                 FooterTextButton("About us") { navController.navigate("about_us") }
                 Spacer(modifier = Modifier.height(18.dp))
 
-                FooterTextButton("Privacy Policy") { println("Navigating to Privacy Policy!") }
+                FooterTextButton("Privacy Policy") { navController.navigate("privacy_policy")  }
                 Spacer(modifier = Modifier.height(18.dp))
 
-                FooterTextButton("Terms of Service") { println("Navigating to Terms of Service!") }
+                FooterTextButton("Terms of Service") { navController.navigate("terms_conditions") }
+
             }
         }
 

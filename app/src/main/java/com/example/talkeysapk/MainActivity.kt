@@ -43,6 +43,8 @@ fun AppNavigation() {
         composable("registration_success") { RegistrationSuccessScreen(navController) }
         composable("event_registration") { EventRegistraion(navController) }
         composable("event_created_successfully") { EventVerificationScreen(navController) }
+        composable("terms_conditions") { TermsAndConditionsScreen(navController) }
+        composable("privacy_policy") { privacyPolicy(navController) }
 
 
         composable(
