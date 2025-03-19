@@ -109,7 +109,7 @@ fun EventDetailScreen(event: Event,navController: NavController) {
                 item { Spacer(modifier = Modifier.height(5.33.dp)) }
 
                 item {
-                    EventInfoBox()
+                    EventInfoBox(navController=navController)
                 }
 
                 item {
@@ -298,13 +298,16 @@ fun VerticalIndicator1() {
 }
 
 @Composable
-fun EventInfoBox(modifier: Modifier = Modifier) {
+fun EventInfoBox(modifier: Modifier = Modifier, navController: NavController) {
+    var isLiked by remember { mutableStateOf(false) }
+    var likeCount by remember { mutableIntStateOf(183) } // Initial like count
+    val replyCount = 8 // Example reply count
+
     Card(
         modifier = modifier
             .width(370.dp)
             .height(241.dp)
-            .padding(start = 20.dp)
-            .background(Color.Transparent, shape = RoundedCornerShape(20.dp)),
+            .padding(start = 20.dp),
         colors = CardDefaults.cardColors(containerColor = Color.Transparent)
     ) {
         Box(
@@ -339,24 +342,47 @@ fun EventInfoBox(modifier: Modifier = Modifier) {
                     // Icons Row
                     Row(
                         horizontalArrangement = Arrangement.spacedBy(12.dp),
-                        verticalAlignment = Alignment.CenterVertically // Ensures all items align properly
+                        verticalAlignment = Alignment.CenterVertically
                     ) {
-                        IconWithText(R.drawable.ic_like, "183 likes")
-                        IconWithText(R.drawable.ic_comment, "•") // Empty text instead of missing text
-                        IconWithText(R.drawable.ic_share, "8 replies")
+                        // ✅ Like Button with Like Count
+                        Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                            Image(
+                                painter = painterResource(id = R.drawable.ic_like),
+                                contentDescription = "Like",
+                                modifier = Modifier
+                                    .size(20.dp)
+                                    .clickable {
+                                        isLiked = !isLiked
+                                        likeCount += if (isLiked) 1 else -1
+                                    },
+                                colorFilter = androidx.compose.ui.graphics.ColorFilter.tint(
+                                    if (isLiked) Color.Red else Color.White
+                                )
+                            )
+                            Text(
+                                text = "$likeCount likes",
+                                color = Color.White,
+                                fontSize = 12.sp
+                            )
+                        }
+
+                        // ✅ Comment Icon
+                        IconWithText(R.drawable.ic_comment, "•") // Comment icon with no text
+
+                        // ✅ Share Button
+                        IconWithText(R.drawable.ic_share, "$replyCount replies")
                     }
                 }
 
                 Spacer(modifier = Modifier.height(16.dp))
 
-                // Register Button adjusted with left and right padding
+                // Register Button
                 Row(
                     modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.End // Aligns the button to the right
+                    horizontalArrangement = Arrangement.End
                 ) {
-                    RegisterButton()
+                    RegisterButton(navController = navController)
                 }
-
 
                 Spacer(modifier = Modifier.height(24.dp))
 
@@ -378,6 +404,7 @@ fun EventInfoBox(modifier: Modifier = Modifier) {
         }
     }
 }
+
 
 @Composable
 fun EventTags() {
@@ -462,13 +489,13 @@ fun EventTag(text: String, isBigger: Boolean = false) {
 }
 
 @Composable
-fun RegisterButton() {
+fun RegisterButton(navController: NavController) {
     Box(
         modifier = Modifier
             .width(133.dp)
             .height(39.dp)
             .background(Color(0xFF8A44CB), shape = RoundedCornerShape(8.dp))
-            .clickable { }
+            .clickable { navController.navigate("event_registration")}
             .padding(10.dp),
         contentAlignment = Alignment.Center
     ) {

@@ -18,8 +18,10 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavController
+import android.content.Intent
+import android.net.Uri
+import androidx.compose.ui.platform.LocalContext
 
 @Composable
 fun Footer(modifier: Modifier = Modifier,navController: NavController) {
@@ -121,7 +123,7 @@ fun Footer(modifier: Modifier = Modifier,navController: NavController) {
             modifier = Modifier.padding(top = 16.dp)
         ) {
             SocialMediaIcon(R.drawable.ic_facebook_icon)
-            SocialMediaIcon(R.drawable.ic_instagram_icon)
+            SocialMediaIcon(R.drawable.ic_instagram_icon, "https://www.instagram.com/talkeys_/")
             SocialMediaIcon(R.drawable.ic_x_icon)
             SocialMediaIcon(R.drawable.ic_linkedin_icon)
             SocialMediaIcon(R.drawable.ic_yt_icon)
@@ -158,15 +160,22 @@ fun FooterTextButton(text: String, onClick: () -> Unit) {
     )
 }
 
-// ✅ Social Media Icon (Kept as is)
 @Composable
-fun SocialMediaIcon(@DrawableRes iconRes: Int) {
+fun SocialMediaIcon(@DrawableRes iconRes: Int, url: String? = null) {
+    val context = LocalContext.current
+
     Image(
         painter = painterResource(id = iconRes),
         contentDescription = null,
-        modifier = Modifier.size(24.dp)
+        modifier = Modifier
+            .size(24.dp)
+            .clickable {
+                url?.let {
+                    val intent = Intent(Intent.ACTION_VIEW, Uri.parse(it))
+                    context.startActivity(intent)
+                }
+            }
     )
 }
-
 
 

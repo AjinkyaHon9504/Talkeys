@@ -41,7 +41,7 @@ fun ExplorePage(navController: NavController) {
                 UserMessage(
                     id = "1",
                     senderName = "Ramesh Kumar",
-                    content = "Lorem ipsum dolor sit amet consectetur.",
+                    content = "Lorem ipsum dolor sit amet consectetur. Risus id . urife fnji ue wf jidks uiewb fj y4uwhel  oiewibo ohwfebjk  2huweij 23huibweh 23uih32p.",
                     likes = 183,
                     replies = 8,
                     timestamp = 1616161616161
@@ -49,7 +49,7 @@ fun ExplorePage(navController: NavController) {
                 UserMessage(
                     id = "2",
                     senderName = "Sita Verma",
-                    content = "Pellentesque habitant morbi tristique.",
+                    content = "PLorem ipsum dolor sit amet consectetur. Risus id . urife fnji ue wf jidks uiewb fj y4uwhel  oiewibo ohwfebjk  2huweij 23huibweh 23uih32p.",
                     likes = 150,
                     replies = 15,
                     timestamp = 1717171717171
@@ -57,7 +57,7 @@ fun ExplorePage(navController: NavController) {
                 UserMessage(
                     id = "3",
                     senderName = "Rahul Das",
-                    content = "Phasellus viverra nulla ut metus varius.",
+                    content = "hyhyy h htrh hrt tht rh s hstrh srthrsthh hatg 23huibweh 23uih32p.",
                     likes = 90,
                     replies = 5,
                     timestamp = 1515151515151
@@ -261,7 +261,6 @@ fun ExplorePage(navController: NavController) {
         }
     }
 }
-
 @Composable
 fun UserMessageBox(message: UserMessage) {
 
@@ -273,84 +272,87 @@ fun UserMessageBox(message: UserMessage) {
             .width(224.dp)
             .height(220.dp)
             .background(Color(0xB2262626), shape = RoundedCornerShape(20.dp))
-            .padding(start = 29.dp, top = 12.dp, end = 29.dp, bottom = 12.dp)
+            .padding(start = 29.dp, top = 12.dp, end = 29.dp)
     ) {
         Column(
-            verticalArrangement = Arrangement.spacedBy(8.dp, Alignment.Top),
+          //  verticalArrangement = Arrangement.spacedBy(8.dp, Alignment.Top),
             horizontalAlignment = Alignment.Start,
         ) {
-            // Profile Info Row
-            Row(verticalAlignment = Alignment.CenterVertically) {
-                Image(
-                    painter = painterResource(id = R.drawable.ic_community_comment_icon),
-                    contentDescription = "Profile Picture",
-                    modifier = Modifier
-                        .size(30.dp)
-                        .background(Color(0xFFD9D9D9), shape = RoundedCornerShape(30.dp))
-                )
-                Spacer(modifier = Modifier.width(10.dp))
+            Column(Modifier
+                .width(166.dp)
+                .height(143.dp)
+
+            ) {
+                // Profile Info Row
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    Image(
+                        painter = painterResource(id = R.drawable.ic_community_comment_icon),
+                        contentDescription = "Profile Picture",
+                        modifier = Modifier
+                            .size(30.dp)
+                            .background(Color(0xFFD9D9D9), shape = RoundedCornerShape(30.dp))
+                    )
+                    Spacer(modifier = Modifier.width(10.dp))
+                    Text(
+                        text = message.senderName,
+                        style = TextStyle(
+                            fontSize = 16.sp,
+                            fontFamily = FontFamily(Font(R.font.urbanist_regular)),
+                            fontWeight = FontWeight(700),
+                            color = Color.White
+                        )
+                    )
+                }
+
+                // Message Text
                 Text(
-                    text = message.senderName,
+                    text = message.content,
                     style = TextStyle(
-                        fontSize = 16.sp,
+                        fontSize = 14.sp,
                         fontFamily = FontFamily(Font(R.font.urbanist_regular)),
-                        fontWeight = FontWeight(700),
+                        fontWeight = FontWeight(300),
                         color = Color.White
                     )
                 )
             }
 
-            // Message Text
-            Text(
-                text = message.content,
-                style = TextStyle(
-                    fontSize = 14.sp,
-                    fontFamily = FontFamily(Font(R.font.urbanist_regular)),
-                    fontWeight = FontWeight(300),
-                    color = Color.White
-                )
-            )
-
-            // Like, Comment, Share Buttons
+            // Like, Comment, Share Icons
             Row(
-                horizontalArrangement = Arrangement.spacedBy(16.dp),
-                verticalAlignment = Alignment.CenterVertically
+                horizontalArrangement = Arrangement.spacedBy(0.dp),
+                verticalAlignment = Alignment.CenterVertically,
+             //   modifier = Modifier.padding(end=12.dp)
             ) {
-                TextButton(onClick = {
-                    isLiked = !isLiked
-                    likeCount += if (isLiked) 1 else -1
-                }) {
-                    Icon(
-                        painter = painterResource(id = R.drawable.ic_like),
-                        contentDescription = "Like",
-                        tint = if (isLiked) Color.Red else Color.White, // Change color when liked
-                        modifier = Modifier.size(24.dp)
-                    )
-                    Spacer(modifier = Modifier.width(4.dp))
-                    Text(text = "$likeCount", color = Color.White)
-                }
+                Icon(
+                    painter = painterResource(id = R.drawable.ic_like),
+                    contentDescription = "Like",
+                    tint = if (isLiked) Color.Red else Color.White,
+                    modifier = Modifier
+                        .size(24.dp)
+                        .clickable {
+                            isLiked = !isLiked
+                            likeCount += if (isLiked) 1 else -1
+                        }
+                )
+                Spacer(modifier = Modifier.width(12.dp))
 
-                TextButton(onClick = { /* Handle Comment */ }) {
-                    Icon(
-                        painter = painterResource(id = R.drawable.ic_comment),
-                        contentDescription = "Comment",
-                        tint = Color.White,
-                        modifier = Modifier.size(24.dp)
-                    )
-                    Spacer(modifier = Modifier.width(4.dp))
-                    Text(text = "${message.replies}", color = Color.White)
-                }
+                Icon(
+                    painter = painterResource(id = R.drawable.ic_comment),
+                    contentDescription = "Comment",
+                    tint = Color.White,
+                    modifier = Modifier
+                        .size(24.dp)
+                        .clickable { /* Handle Comment */ }
+                )
+                Spacer(modifier = Modifier.width(12.dp))
 
-                TextButton(onClick = { /* Handle Share */ }) {
-                    Icon(
-                        painter = painterResource(id = R.drawable.ic_share),
-                        contentDescription = "Share",
-                        tint = Color.White,
-                        modifier = Modifier.size(24.dp)
-                    )
-                    Spacer(modifier = Modifier.width(4.dp))
-                    Text(text = "Share", color = Color.White)
-                }
+                Icon(
+                    painter = painterResource(id = R.drawable.ic_share),
+                    contentDescription = "Share",
+                    tint = Color.White,
+                    modifier = Modifier
+                        .size(24.dp)
+                        .clickable { /* Handle Share */ }
+                )
             }
 
             // Replies & Likes Info
@@ -362,6 +364,7 @@ fun UserMessageBox(message: UserMessage) {
         }
     }
 }
+
 data class UserMessage(
     val id: String,
     val senderName: String,

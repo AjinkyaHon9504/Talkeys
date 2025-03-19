@@ -21,14 +21,12 @@ class MainActivity : ComponentActivity() {
         setContent {
             TalkeysApkTheme {
                 Surface(modifier = Modifier.fillMaxSize()) {
-                    //AppNavigation()
-                    LoginScreen()
+                    AppNavigation()
                 }
             }
         }
     }
 }
-
 @Composable
 fun AppNavigation() {
     val navController = rememberNavController()

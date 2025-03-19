@@ -23,7 +23,6 @@ import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
@@ -32,6 +31,8 @@ import com.airbnb.lottie.compose.LottieCompositionSpec
 import com.airbnb.lottie.compose.animateLottieCompositionAsState
 import com.airbnb.lottie.compose.rememberLottieComposition
 import com.example.talkies.ui.HomeTopBar
+
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeScreen(navController: NavController) {
@@ -91,14 +92,14 @@ fun HostYourOwnEvent(navController: NavController) {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(horizontal = 14.dp),
-            horizontalArrangement = Arrangement.SpaceBetween,
+               // .padding(horizontal = 14.dp)
+            , horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
         ) {
             Column(
                 modifier = Modifier
-                    .padding(start = 14.dp)
-                    .width(260.dp)
+                 //   .padding(start = 14.dp)
+                //    .width(260.dp)
             ) {
                 Text(
                     text = "Host your own EVENT!!!",
@@ -121,7 +122,7 @@ fun HostYourOwnEvent(navController: NavController) {
                         fontFamily = FontFamily(Font(R.font.urbanist_medium)),
                         fontWeight = FontWeight.Normal,
                         color = Color.White,
-                        textAlign = TextAlign.Left,
+                        textAlign = TextAlign.Center,
                     ),
                     modifier = Modifier
                         .width(237.dp)
@@ -146,24 +147,16 @@ fun HostYourOwnEvent(navController: NavController) {
                     )
                 }
             }
-
-            // ✅ Lottie Animation
-            val composition by rememberLottieComposition(LottieCompositionSpec.RawRes(R.raw.host_ur_event_animation))
-            val progress by animateLottieCompositionAsState(
-                composition = composition,
-                iterations = Int.MAX_VALUE // 🔥 Loop forever
-            )
-
-            LottieAnimation(
-                composition = composition,
-                progress = { progress },
+            Image(
+                painter = painterResource(id = R.drawable.hostevent_sticker),
+                contentDescription = "image description",
+                contentScale = ContentScale.Crop,
                 modifier = Modifier
-                    .size(300.dp)
-                    .scale(2.0f) // 🔥 Increase size (adjust as needed)
-                    .padding(end = 16.dp)
+                    .size(260.dp)
+                   // .padding(end = 16.dp)
             )
         }
-    }
+}
 
 
 // ✅ BANNER SECTION
