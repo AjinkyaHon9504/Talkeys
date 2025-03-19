@@ -31,7 +31,10 @@ class MainActivity : ComponentActivity() {
 fun AppNavigation() {
     val navController = rememberNavController()
 
-    NavHost(navController = navController, startDestination = "home") {
+    NavHost(navController = navController, startDestination = "landingpage") {
+        composable("landingpage") { LandingPage(navController) }
+        composable("signup") { SignUpScreen(navController) }
+        composable("login") { LoginScreen(navController) }
         composable("home") { HomeScreen(navController) }
         composable("events") { ExploreEventsScreen(navController) }
         composable("communities") { CommunitiesScreen(navController) }

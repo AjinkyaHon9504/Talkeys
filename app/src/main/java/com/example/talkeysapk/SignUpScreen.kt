@@ -24,9 +24,10 @@ import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 
 @Composable
-fun SignUpScreen() {
+fun SignUpScreen(navController: NavController) {
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -55,11 +56,11 @@ fun SignUpScreen() {
                 Text(
                     text = "Create an\naccount",
                     style = TextStyle(
-                        fontSize = 40.sp,
-                        lineHeight = 48.sp,
-                        fontFamily = FontFamily(Font(R.font.urbanist_bold)),
-                        fontWeight = FontWeight.Bold,
-                        color = Color.White,
+                        fontSize = 36.sp,
+                        lineHeight = 43.sp,
+                        fontFamily = FontFamily(Font(R.font.domine)),
+                        fontWeight = FontWeight(700),
+                        color = Color(0xFFF5F5F5),
                     ),
                     modifier = Modifier.align(Alignment.TopStart)
                 )
@@ -113,7 +114,7 @@ fun SignUpScreen() {
                         },
                         style = TextStyle(
                             fontSize = 12.sp,
-                            fontFamily = FontFamily(Font(R.font.urbanist_regular)),
+                            fontFamily = FontFamily(Font(R.font.montserrat)),
                             fontWeight = FontWeight.Normal,
                             color = Color(0xFFAAAAAA)
                         )
@@ -122,7 +123,7 @@ fun SignUpScreen() {
                         text = "to the public offer",
                         style = TextStyle(
                             fontSize = 12.sp,
-                            fontFamily = FontFamily(Font(R.font.urbanist_regular)),
+                            fontFamily = FontFamily(Font(R.font.montserrat)),
                             fontWeight = FontWeight.Normal,
                             color = Color(0xFFAAAAAA)
                         )
@@ -133,21 +134,25 @@ fun SignUpScreen() {
             Spacer(modifier = Modifier.height(30.dp))
 
             // Create Account Button
-            Box(
+            Button(
+                onClick = { /* Handle click action */ },
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = Color.Transparent, // Removes button background color
+                    contentColor = Color.Unspecified    // Ensures text color is used instead of default
+                ),
+                elevation = null ,// Removes button shadow
                 modifier = Modifier
                     .width(317.dp)
                     .height(55.dp)
                     .background(color = Color(0xFF9B51E0), shape = RoundedCornerShape(size = 4.dp))
-                    .clickable { /* Handle click action */ },
-                contentAlignment = Alignment.Center
             ) {
                 Text(
                     text = "Create Account",
                     style = TextStyle(
-                        fontSize = 18.sp,
-                        fontFamily = FontFamily(Font(R.font.urbanist_semibold)),
-                        fontWeight = FontWeight.SemiBold,
-                        color = Color.White
+                        fontSize = 20.sp,
+                        fontFamily = FontFamily(Font(R.font.open_sans)),
+                        fontWeight = FontWeight(600),
+                        color = Color(0xFFFFFFFF),
                     )
                 )
             }
@@ -159,7 +164,7 @@ fun SignUpScreen() {
                 text = "- OR Continue with -",
                 style = TextStyle(
                     fontSize = 14.sp,
-                    fontFamily = FontFamily(Font(R.font.urbanist_regular)),
+                    fontFamily = FontFamily(Font(R.font.montserrat)),
                     fontWeight = FontWeight.Normal,
                     color = Color.White,
                     textAlign = TextAlign.Center
@@ -188,22 +193,32 @@ fun SignUpScreen() {
                     text = "I Already Have an Account ",
                     style = TextStyle(
                         fontSize = 14.sp,
-                        fontFamily = FontFamily(Font(R.font.urbanist_regular)),
+                        fontFamily = FontFamily(Font(R.font.poppins)),
                         fontWeight = FontWeight.Normal,
                         color = Color.White
                     )
                 )
-                Text(
-                    text = "Login",
-                    style = TextStyle(
-                        fontSize = 14.sp,
-                        fontFamily = FontFamily(Font(R.font.urbanist_semibold)),
-                        fontWeight = FontWeight.SemiBold,
-                        color = Color(0xFFFF0044),
-                        textDecoration = TextDecoration.Underline,
+                Button(
+                    onClick = { navController.navigate("login") },
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = Color.Transparent, // Removes button background color
+                        contentColor = Color.Unspecified    // Ensures text color is used instead of default
                     ),
-                    modifier = Modifier.clickable { /* Handle login click */ }
-                )
+                    contentPadding = PaddingValues(0.dp),
+                    elevation = null // Removes button shadow
+                ) {
+                    Text(
+                        text = "Login",
+                        style = TextStyle(
+                            fontSize = 14.sp,
+                            fontFamily = FontFamily(Font(R.font.montserrat)),
+                            fontWeight = FontWeight(600),
+                            color = Color(0xFFF83758),
+                            textAlign = TextAlign.Center,
+                            textDecoration = TextDecoration.Underline,
+                        )
+                    )
+                }
             }
         }
     }
@@ -263,9 +278,11 @@ fun CustomOutlinedTextField(
                         onValueChange = { text.value = it },
                         singleLine = true,
                         textStyle = TextStyle(
-                            color = Color.White,
                             fontSize = 14.sp,
-                            fontFamily = FontFamily(Font(R.font.urbanist_regular))
+                            fontFamily = FontFamily(Font(R.font.open_sans)),
+                            fontWeight = FontWeight(400),
+                            color = Color(0xFF676767),
+                            textAlign = TextAlign.Center
                         ),
                         visualTransformation = transformation,
                         modifier = Modifier.fillMaxWidth(),
@@ -279,7 +296,7 @@ fun CustomOutlinedTextField(
                                         text = placeholderText,
                                         style = TextStyle(
                                             fontSize = 14.sp,
-                                            fontFamily = FontFamily(Font(R.font.urbanist_regular)),
+                                            fontFamily = FontFamily(Font(R.font.open_sans)),
                                             fontWeight = FontWeight.Normal,
                                             color = Color(0xFFAAAAAA),
                                         )

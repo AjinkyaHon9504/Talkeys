@@ -22,9 +22,10 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 
 @Composable
-fun LoginScreen() {
+fun LoginScreen(navController: NavController) {
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -53,11 +54,11 @@ fun LoginScreen() {
                 Text(
                     text = "Welcome\nBack!",
                     style = TextStyle(
-                        fontSize = 40.sp,
-                        lineHeight = 48.sp,
+                        fontSize = 36.sp,
+                        lineHeight = 43.sp,
                         fontFamily = FontFamily(Font(R.font.domine)),
-                        fontWeight = FontWeight.Bold,
-                        color = Color.White,
+                        fontWeight = FontWeight(700),
+                        color = Color(0xFFFFFFFF)
                     ),
                     modifier = Modifier.align(Alignment.TopStart)
                 )
@@ -102,20 +103,20 @@ fun LoginScreen() {
             Spacer(modifier = Modifier.height(40.dp))
 
             // Login Button
-            Box(
+            Button(
+                onClick = { navController.navigate("home") },
                 modifier = Modifier
                     .width(317.dp)
-                    .height(55.dp)
-                    .background(color = Color(0xFF9B51E0), shape = RoundedCornerShape(size = 4.dp))
-                    .clickable { /* Handle login action */ },
-                contentAlignment = Alignment.Center
+                    .height(55.dp),
+                shape = RoundedCornerShape(4.dp),
+                colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF9B51E0))
             ) {
                 Text(
                     text = "Login",
                     style = TextStyle(
-                        fontSize = 18.sp,
+                        fontSize = 20.sp,
                         fontFamily = FontFamily(Font(R.font.open_sans)),
-                        fontWeight = FontWeight.SemiBold,
+                        fontWeight = FontWeight(600),
                         color = Color.White
                     )
                 )
@@ -170,9 +171,11 @@ fun CustomOutlinedTextField1(
                     onValueChange = { text.value = it },
                     singleLine = true,
                     textStyle = TextStyle(
-                        color = Color.White,
+                        color = Color(0xFF676767),
                         fontSize = 14.sp,
-                        fontFamily = FontFamily(Font(R.font.open_sans))
+                        fontWeight = FontWeight(400),
+                        fontFamily = FontFamily(Font(R.font.open_sans)),
+                        textAlign = TextAlign.Center,
                     ),
                     visualTransformation = if (isPassword && !passwordVisible.value)
                         PasswordVisualTransformation() else VisualTransformation.None,
