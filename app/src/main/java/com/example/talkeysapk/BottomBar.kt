@@ -10,6 +10,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
@@ -18,14 +19,14 @@ import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.zIndex
 import androidx.navigation.NavController
+import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 
 @Composable
 fun BottomBar(navController: NavController, scrollState: ScrollState, modifier: Modifier = Modifier) {
-    var selectedDestination by remember { mutableStateOf("home") } // Default to home
-    val currentRoute = navController.currentBackStackEntryFlow.collectAsState(initial = navController.currentDestination?.route)
+    // Get current route from NavController
+    val currentRoute = navController.currentBackStackEntryAsState().value?.destination?.route
 
     val backgroundColor by animateColorAsState(
         targetValue = if (scrollState.value > 100) Color.Black.copy(alpha = 0.3f)
@@ -35,7 +36,6 @@ fun BottomBar(navController: NavController, scrollState: ScrollState, modifier: 
 
     Box(
         modifier = modifier
-         //   .fillMaxWidth()
             .height(70.dp)
             .offset(y = (-20).dp)
             .padding(bottom = 16.dp)
@@ -61,34 +61,69 @@ fun BottomBar(navController: NavController, scrollState: ScrollState, modifier: 
                 .height(40.dp)
                 .padding(horizontal = 25.dp)
         ) {
-            val icons = listOf(
-                R.drawable.ic_community_icon to "communities",
-                R.drawable.ic_events_icon to "events",
-                R.drawable.ic_home_icon to "home",
-                R.drawable.ic_search_icon to "explore",
-                R.drawable.ic_globe_icon to "" // No navigation, just an icon
+            val navigationItems = listOf(
+                NavigationItem(
+                    route = "communities",
+                    normalIcon = R.drawable.ic_community_icon,
+                    selectedIcon = R.drawable.ic_globe_selected,
+                    contentDescription = "Communities"
+                ),
+                NavigationItem(
+                    route = "events",
+                    normalIcon = R.drawable.ic_events_icon,
+                    selectedIcon = R.drawable.ic_events_selected,
+                    contentDescription = "Events"
+                ),
+                NavigationItem(
+                    route = "home",
+                    normalIcon = R.drawable.ic_home_icon,
+                    selectedIcon = R.drawable.ic_home_selected,
+                    contentDescription = "Home"
+                ),
+                NavigationItem(
+                    route = "explore",
+                    normalIcon = R.drawable.ic_search_icon,
+                    selectedIcon = R.drawable.ic_search_selected,
+                    contentDescription = "Explore"
+                ),
+                NavigationItem(
+                    route = "globe",
+                    normalIcon = R.drawable.ic_globe_icon,
+                    selectedIcon = R.drawable.ic_community_selected,
+                    contentDescription = "Globe"
+                )
             )
 
-            icons.forEach { (icon, destination) ->
-                val isSelected = currentRoute.value == destination
-                val iconColor = if (isSelected) Color(0xFFAC6FE4) else Color.White
+            navigationItems.forEach { navItem ->
+                val isSelected = navItem.route == currentRoute
+                val iconToDisplay = if (isSelected) navItem.selectedIcon else navItem.normalIcon
 
                 Icon(
-                    painter = painterResource(id = icon),
-                    contentDescription = "Navigation Icon",
+                    painter = painterResource(id = iconToDisplay),
+                    contentDescription = navItem.contentDescription,
                     modifier = Modifier
                         .size(30.dp)
                         .clickable {
-                            if (destination.isNotEmpty() && destination != currentRoute.value) {
-                                navController.navigate(destination)
+                            navController.navigate(navItem.route) {
+                                popUpTo(navController.graph.startDestinationId)
+                                launchSingleTop = true
                             }
                         },
-                    tint = iconColor
+                    tint = Color.Unspecified // Keeps original icon colors
                 )
             }
         }
     }
 }
+
+// Data class to hold navigation item information
+data class NavigationItem(
+    val route: String,
+    val normalIcon: Int,
+    val selectedIcon: Int,
+    val contentDescription: String
+)
+
 @Preview(showBackground = true)
 @Composable
 fun FloatingBottomBarPreview() {
