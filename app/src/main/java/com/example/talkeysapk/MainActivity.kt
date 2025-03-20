@@ -21,7 +21,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             TalkeysApkTheme {
                 Surface(modifier = Modifier.fillMaxSize()) {
-                    AppNavigation()
+                   AppNavigation()
                 }
             }
         }
