@@ -144,6 +144,64 @@ fun privacyPolicy(navController: NavController) {
                 )
 
                 Spacer(modifier = Modifier.height(24.dp))
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(vertical = 24.dp)
+
+                ) {
+                    Image(
+                        painter = painterResource(id = R.drawable.message_bg), // Replace with your PNG resource
+                        contentDescription = "Thank You Background",
+                        contentScale = ContentScale.FillBounds,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(180.dp) // Adjust height if needed
+                    )
+                    Column(
+                        modifier = Modifier
+                            .padding(24.dp),
+                        horizontalAlignment = Alignment.CenterHorizontally
+                    ) {
+                        Text(
+                            text = "Thank you for trusting Talkeys with your personal information. We are committed to maintaining the highest standards of privacy and data protection.",
+                            style = TextStyle(
+                                fontSize = 16.sp,
+                                fontFamily = FontFamily(Font(R.font.urbanist_regular)),
+                                fontWeight = FontWeight(500),
+                                color = Color.White,
+                                textAlign = TextAlign.Center,
+                                lineHeight = 24.sp
+                            )
+                        )
+
+                        Spacer(modifier = Modifier.height(16.dp))
+
+                        Text(
+                            text = "Sincerely,",
+                            style = TextStyle(
+                                fontSize = 16.sp,
+                                fontFamily = FontFamily(Font(R.font.urbanist_regular)),
+                                fontWeight = FontWeight(400),
+                                color = Color.White,
+                                textAlign = TextAlign.Center
+                            )
+                        )
+
+                        Spacer(modifier = Modifier.height(4.dp))
+
+                        Text(
+                            text = "Team Talkeys",
+                            style = TextStyle(
+                                fontSize = 18.sp,
+                                fontFamily = FontFamily(Font(R.font.urbanist_regular)),
+                                fontWeight = FontWeight(600),
+                                color = Color(0xFF7A2EC0),
+                                textAlign = TextAlign.Center
+                            )
+                        )
+                    }
+                }
 
                 // Footer
                 Footer(navController = navController)
