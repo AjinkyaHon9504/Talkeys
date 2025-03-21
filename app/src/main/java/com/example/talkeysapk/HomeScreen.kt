@@ -6,11 +6,13 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -32,57 +34,76 @@ import com.airbnb.lottie.compose.animateLottieCompositionAsState
 import com.airbnb.lottie.compose.rememberLottieComposition
 import com.example.talkies.ui.HomeTopBar
 
-
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeScreen(navController: NavController) {
     val eventList = Event.getAllEvents()
     val communityList = CommunityData.getAllCommunities()
 
-    Scaffold(
-        topBar = { HomeTopBar(navController = navController) } // ✅ Keeps TopBar fixed
-    ) { paddingValues ->
-        Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(paddingValues)
-        ) {
-            // ✅ Background image (fixed, not inside scrolling area)
-            Image(
-                painter = painterResource(id = R.drawable.background),
-                contentDescription = "Background Image",
-                contentScale = ContentScale.Crop,
-                modifier = Modifier.fillMaxSize()
-            )
+    Box(modifier = Modifier.fillMaxSize()) {
+        // Background image (fixed, not inside scrolling area)
+        Image(
+            painter = painterResource(id = R.drawable.background),
+            contentDescription = "Background Image",
+            contentScale = ContentScale.Crop,
+            modifier = Modifier.fillMaxSize()
+        )
 
-            // ✅ LazyColumn handles scrolling
-            LazyColumn(
-                modifier = Modifier.fillMaxSize(),
-                verticalArrangement = Arrangement.spacedBy(16.dp),
-                contentPadding = PaddingValues(bottom = 100.dp)
-            ) {
-                item { BannerSection(navController) }
-           //     item{ Spacer(modifier = Modifier.padding(2.dp)) }
-                item { CategoryTitle("Upcoming Events") }
-                item { EventRow(eventList, navController) }
-             //   item { Spacer(modifier = Modifier.height(16.dp)) }
-                item { CategoryTitle("Featured Communities") }
-                item { CommunityRow(communityList, navController) }
-           //     item{ Spacer(modifier = Modifier.padding(10.dp)) }
-                item { CategoryTitle("Influencers Shaping the Community") }
-                item { InfluencerRow() }
-                item { HostYourOwnEvent(navController) }
-                item { Footer(modifier = Modifier.align(Alignment.BottomCenter),navController = navController) }
-            }
-
-            // ✅ Bottom Bar stays fixed
-            BottomBar(
-                navController,
+        Scaffold(
+            topBar = { HomeTopBar(navController = navController) },
+            containerColor = Color.Transparent, // Make scaffold background transparent
+            contentColor = Color.White,
+            modifier = Modifier.fillMaxSize()
+        ) { paddingValues ->
+            Box(
                 modifier = Modifier
-                    .align(Alignment.BottomCenter)
-                    .fillMaxWidth(), scrollState = rememberScrollState()
-            )
+                    .fillMaxSize()
+                    .padding(paddingValues)
+            ) {
+                // LazyColumn with LazyListState for scroll tracking
+                val lazyListState = rememberLazyListState()
+
+                LazyColumn(
+                    state = lazyListState,
+                    modifier = Modifier.fillMaxSize(),
+                    verticalArrangement = Arrangement.spacedBy(16.dp),
+                    contentPadding = PaddingValues(bottom = 100.dp) // Padding for BottomBar
+                ) {
+                    item { BannerSection(navController) }
+                    item { CategoryTitle("Upcoming Events") }
+                    item { EventRow(eventList, navController) }
+                    item { CategoryTitle("Featured Communities") }
+                    item { CommunityRow(communityList, navController) }
+                    item { CategoryTitle("Influencers Shaping the Community") }
+                    item { InfluencerRow() }
+                    item { HostYourOwnEvent(navController) }
+                    item {
+                        Footer(
+                            modifier = Modifier,
+                            navController = navController
+                        )
+                    }
+                }
+
+                // Create a derived ScrollState from LazyListState for the BottomBar
+                val scrollState = rememberScrollState()
+
+                // Update scrollState whenever lazyListState changes
+                LaunchedEffect(lazyListState.firstVisibleItemScrollOffset) {
+                    scrollState.scrollTo(lazyListState.firstVisibleItemScrollOffset)
+                }
+            }
         }
+
+        // Add BottomBar outside the Scaffold to ensure it appears above everything
+        val scrollState = rememberScrollState()
+        BottomBar(
+            navController = navController,
+            scrollState = scrollState,
+            modifier = Modifier
+                .align(Alignment.BottomCenter)
+                .fillMaxWidth()
+        )
     }
 }
 

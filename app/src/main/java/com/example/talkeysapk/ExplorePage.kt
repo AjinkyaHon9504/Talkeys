@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.material3.*
@@ -33,6 +34,9 @@ fun ExplorePage(navController: NavController) {
     val expanded = remember { mutableStateOf(false) }
     val selectedSortOption = remember { mutableStateOf("Sort by") }
     val sortOptions = listOf("Latest", "Relevant", "Hot")
+
+    // For BottomBar animation
+    val scrollState = rememberScrollState()
 
     // Sample data for user messages
     val userMessages = remember {
@@ -91,10 +95,13 @@ fun ExplorePage(navController: NavController) {
         ) {
             // Top Bar
             HomeTopBar(navController = navController)
+            val lazyListState = rememberLazyListState()
 
             // Scrollable Content
             LazyColumn(
-                modifier = Modifier.fillMaxSize()
+                state = lazyListState,
+                modifier = Modifier.fillMaxSize(),
+                contentPadding = PaddingValues(bottom = 80.dp)
             ) {
                 item {
                     Spacer(modifier = Modifier.height(25.dp))
@@ -258,7 +265,18 @@ fun ExplorePage(navController: NavController) {
                     Footer(navController = navController)
                 }
             }
+            // Update scrollState based on lazyListState scrolling
+            LaunchedEffect(lazyListState.firstVisibleItemScrollOffset) {
+                scrollState.scrollTo(lazyListState.firstVisibleItemScrollOffset)
+            }
         }
+
+        // Add BottomBar
+        BottomBar(
+            navController = navController,
+            scrollState = scrollState,
+            modifier = Modifier.align(Alignment.BottomCenter)
+        )
     }
 }
 @Composable

@@ -1,11 +1,14 @@
 package com.example.talkeysapk
 
+import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -32,52 +35,64 @@ fun CommunitiesScreen(navController: NavController) {
         modifier = Modifier
             .fillMaxSize()
             .paint(
-                painter = painterResource(id = R.drawable.background), // Replace with your background image resource ID
+                painter = painterResource(id = R.drawable.background),
                 contentScale = ContentScale.Crop
             )
     ) {
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .background(Color.Black.copy(alpha = 0.5f)) // Optional: Add a semi-transparent overlay if needed
-                .padding(bottom = 56.dp) // Padding for BottomBar
-        ) {
-            // Top Bar
-            HomeTopBar(navController = navController)
-
-            LazyColumn(
-                modifier = Modifier.fillMaxSize(),
-                verticalArrangement = Arrangement.spacedBy(12.dp),
-                contentPadding = PaddingValues(bottom = 32.dp)
+        Scaffold(
+            topBar = { HomeTopBar(navController = navController) },
+            containerColor = Color.Transparent,
+            contentColor = Color.White,
+            modifier = Modifier.fillMaxSize()
+        ) { paddingValues ->
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(paddingValues)
             ) {
-                // Title
-                item {
-                    Text(
-                        text = "Explore Communities",
-                        style = TextStyle(
-                            fontSize = 22.sp,
-                            fontFamily = FontFamily(Font(R.font.urbanist_semibold)),
-                            color = Color.White,
-                            textAlign = TextAlign.Start
-                        ),
-                        modifier = Modifier.padding(top = 12.dp, start = 19.dp)
-                    )
-                }
+                val lazyListState = rememberLazyListState()
 
-                categories.forEach { category ->
-                    item { CommunityTitle(category.name) }
-                    item { CommunityRow(category.communities, navController) }
-                }
+                LazyColumn(
+                    modifier = Modifier.fillMaxSize(),
+                    verticalArrangement = Arrangement.spacedBy(12.dp),
+                    contentPadding = PaddingValues(bottom = 80.dp)
+                ) {
+                    // Title
+                    item {
+                        Text(
+                            text = "Explore Communities",
+                            style = TextStyle(
+                                fontSize = 22.sp,
+                                fontFamily = FontFamily(Font(R.font.urbanist_semibold)),
+                                color = Color.White,
+                                textAlign = TextAlign.Start
+                            ),
+                            modifier = Modifier.padding(top = 12.dp, start = 19.dp)
+                        )
+                    }
 
-                item { Footer(navController = navController) }
+                    categories.forEach { category ->
+                        item { CommunityTitle(category.name) }
+                        item { CommunityRow(category.communities, navController) }
+                    }
+
+                    item { Footer(navController = navController) }
+                }
             }
         }
-        val scrollState = rememberScrollState()
 
-        // BottomBar
-        BottomBar(navController = navController, scrollState, modifier = Modifier.align(Alignment.BottomCenter))
+        // Add BottomBar outside the Scaffold
+        val scrollState = rememberScrollState()
+        BottomBar(
+            navController = navController,
+            scrollState = scrollState,
+            modifier = Modifier
+                .align(Alignment.BottomCenter)
+                .fillMaxWidth()
+        )
     }
 }
+
 @Composable
 fun CommunityRow(communities: List<HomePageCommunity>, navController: NavController) {
     LazyRow(
