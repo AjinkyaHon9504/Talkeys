@@ -206,9 +206,7 @@ fun BannerSection(navController: NavController) {
                     textAlign = TextAlign.Center,
                     modifier = Modifier.fillMaxWidth()
                 )
-
                 Spacer(modifier = Modifier.height(12.dp))
-
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.spacedBy(8.dp, Alignment.CenterHorizontally),
@@ -230,7 +228,6 @@ fun BannerSection(navController: NavController) {
                             color = Color.White
                         )
                     }
-
                     Button(
                         onClick = { navController.navigate("communities") },
                         modifier = Modifier
