@@ -1,80 +1,103 @@
 package com.example.talkeysapk
 
-import androidx.compose.foundation.*
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
+import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
-import androidx.compose.material3.*
+import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Email
+import androidx.compose.material.icons.filled.Lock
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.OutlinedTextFieldDefaults
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.ui.*
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.buildAnnotatedString
-import androidx.compose.ui.text.font.*
+import androidx.compose.ui.text.font.Font
+import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 
 @Composable
-fun SignUpScreen(navController: NavController) {
-    Box(
-        modifier = Modifier
-            .fillMaxSize()
-    ) {
-        // Dark textured background
+fun SignUpScreen(
+    navController: NavController
+) {
+    Box(modifier = Modifier.fillMaxSize()) {
+        // Background image
         Image(
             painter = painterResource(id = R.drawable.background),
-            contentDescription = "Background Image",
-            contentScale = ContentScale.Crop,
-            modifier = Modifier.fillMaxSize()
+            contentDescription = "Background",
+            modifier = Modifier.fillMaxSize(),
+            contentScale = ContentScale.Crop
         )
 
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(horizontal = 24.dp),
-            horizontalAlignment = Alignment.CenterHorizontally
+                .padding(24.dp),
+            horizontalAlignment = Alignment.Start
         ) {
-            // Use the same width constraint as the text fields
-            Box(
-                modifier = Modifier
-                    .width(317.dp)
-                    .padding(top = 80.dp)
-            ) {
-                // Title - now aligned with the Box's left edge
-                Text(
-                    text = "Create an\naccount",
-                    style = TextStyle(
-                        fontSize = 36.sp,
-                        lineHeight = 43.sp,
-                        fontFamily = FontFamily(Font(R.font.domine)),
-                        fontWeight = FontWeight(700),
-                        color = Color(0xFFF5F5F5),
-                    ),
-                    modifier = Modifier.align(Alignment.TopStart)
-                )
-            }
-
             Spacer(modifier = Modifier.height(40.dp))
 
-            // Username Field
+            // Title
+            Text(
+                text = "Create an\naccount",
+                color = Color.White,
+                fontSize = 28.sp,
+                fontFamily = FontFamily(Font(R.font.urbanist_regular)),
+                fontWeight = FontWeight(700),
+                lineHeight = 34.sp
+            )
+
+            Spacer(modifier = Modifier.height(24.dp))
+
+            // Username/Email field
+            var username by remember { mutableStateOf("") }
             CustomOutlinedTextField(
                 placeholderText = "Username or Email",
                 leadingIcon = R.drawable.user
             )
-
-            Spacer(modifier = Modifier.height(20.dp))
+            Spacer(modifier = Modifier.height(16.dp))
 
             // Password Field
             CustomOutlinedTextField(
@@ -94,136 +117,102 @@ fun SignUpScreen(navController: NavController) {
                 isPassword = true
             )
 
-            Spacer(modifier = Modifier.height(12.dp))
+            Spacer(modifier = Modifier.height(16.dp))
 
-            // Terms & Conditions Text - now aligned with the custom text field
-            Box(
-                modifier = Modifier
-                    .width(317.dp)
-            ) {
-                Column(
-                    modifier = Modifier.align(Alignment.TopStart)
-                ) {
-                    Text(
-                        text = buildAnnotatedString {
-                            append("By clicking the ")
-                            withStyle(style = SpanStyle(color = Color(0xFFFF0044))) {
-                                append("Register")
-                            }
-                            append(" button, you agree")
-                        },
-                        style = TextStyle(
-                            fontSize = 12.sp,
-                            fontFamily = FontFamily(Font(R.font.montserrat)),
-                            fontWeight = FontWeight.Normal,
-                            color = Color(0xFFAAAAAA)
-                        )
-                    )
-                    Text(
-                        text = "to the public offer",
-                        style = TextStyle(
-                            fontSize = 12.sp,
-                            fontFamily = FontFamily(Font(R.font.montserrat)),
-                            fontWeight = FontWeight.Normal,
-                            color = Color(0xFFAAAAAA)
-                        )
-                    )
-                }
-            }
-
+            Text(
+                text = buildAnnotatedString {
+                    append("By clicking the ")
+                    withStyle(style = SpanStyle(color = Color(0xFFFF0044))) {
+                        append("Register")
+                    }
+                    append(" button, you agree to the public offer")
+                },
+                style = TextStyle(
+                    fontSize = 12.sp,
+                    fontFamily = FontFamily(Font(R.font.urbanist_regular)),
+                    fontWeight = FontWeight.Normal,
+                    color = Color(0xFFAAAAAA)
+                )
+            )
+//            Text(
+//                text = "to the public offer",
+//                style = TextStyle(
+//                    fontSize = 12.sp,
+//                    fontFamily = FontFamily(Font(R.font.urbanist_regular)),
+//                    fontWeight = FontWeight.Normal,
+//                    color = Color(0xFFAAAAAA)
+//                )
+//            )
             Spacer(modifier = Modifier.height(30.dp))
 
             // Create Account Button
             Button(
-                onClick = { /* Handle click action */ },
+                onClick = { navController.navigate("home") },
+                modifier = Modifier.fillMaxWidth(),
+                shape = RoundedCornerShape(4.dp),
                 colors = ButtonDefaults.buttonColors(
-                    containerColor = Color.Transparent, // Removes button background color
-                    contentColor = Color.Unspecified    // Ensures text color is used instead of default
-                ),
-                elevation = null ,// Removes button shadow
-                modifier = Modifier
-                    .width(317.dp)
-                    .height(55.dp)
-                    .background(color = Color(0xFF9B51E0), shape = RoundedCornerShape(size = 4.dp))
+                    containerColor = Color(0xFFB768FF)
+                )
             ) {
                 Text(
                     text = "Create Account",
-                    style = TextStyle(
-                        fontSize = 20.sp,
-                        fontFamily = FontFamily(Font(R.font.open_sans)),
-                        fontWeight = FontWeight(600),
-                        color = Color(0xFFFFFFFF),
-                    )
+                    modifier = Modifier.padding(vertical = 8.dp),
+                    fontSize = 16.sp,
+                    fontWeight = FontWeight.Bold
                 )
             }
 
-            Spacer(modifier = Modifier.height(40.dp))
+            Spacer(modifier = Modifier.height(30.dp))
 
-            // OR Continue With
+            // Or continue with
             Text(
-                text = "- OR Continue with -",
-                style = TextStyle(
-                    fontSize = 14.sp,
-                    fontFamily = FontFamily(Font(R.font.montserrat)),
-                    fontWeight = FontWeight.Normal,
-                    color = Color.White,
-                    textAlign = TextAlign.Center
-                )
+                text = "- OR CONTINUE WITH -",
+                modifier = Modifier.fillMaxWidth(),
+                textAlign = TextAlign.Center,
+                color = Color.White,
+                fontSize = 12.sp
             )
 
-            Spacer(modifier = Modifier.height(24.dp))
+            Spacer(modifier = Modifier.height(16.dp))
 
-            // Social Media Buttons
+            // Social login buttons
             Row(
-                horizontalArrangement = Arrangement.spacedBy(16.dp),
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.Center,
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 SocialIconButton(R.drawable.google_icon)
+                Spacer(modifier = Modifier.width(24.dp))
                 SocialIconButton(R.drawable.apple_icon)
-                SocialIconButton(R.drawable.facebook_icon)
+                Spacer(modifier = Modifier.width(24.dp))
+                SocialIconButton(R.drawable.ic_facebook_icon)
             }
+            Spacer(modifier = Modifier.padding(10.dp))
 
-            Spacer(modifier = Modifier.height(40.dp))
-
-            // Already Have an Account
+            // Already have an account
             Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.Center,
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Text(
-                    text = "I Already Have an Account ",
-                    style = TextStyle(
-                        fontSize = 14.sp,
-                        fontFamily = FontFamily(Font(R.font.poppins)),
-                        fontWeight = FontWeight.Normal,
-                        color = Color.White
-                    )
+                    text = "I Already Have an Account",
+                    color = Color.White,
+                    fontFamily = FontFamily(Font(R.font.urbanist_regular)),
+                    fontWeight = FontWeight.Normal,
                 )
-                Button(
-                    onClick = { navController.navigate("login") },
-                    colors = ButtonDefaults.buttonColors(
-                        containerColor = Color.Transparent, // Removes button background color
-                        contentColor = Color.Unspecified    // Ensures text color is used instead of default
-                    ),
-                    contentPadding = PaddingValues(0.dp),
-                    elevation = null // Removes button shadow
-                ) {
+                TextButton(onClick = {navController.navigate("login")}) {
                     Text(
                         text = "Login",
-                        style = TextStyle(
-                            fontSize = 14.sp,
-                            fontFamily = FontFamily(Font(R.font.montserrat)),
-                            fontWeight = FontWeight(600),
-                            color = Color(0xFFF83758),
-                            textAlign = TextAlign.Center,
-                            textDecoration = TextDecoration.Underline,
-                        )
+                        fontFamily = FontFamily(Font(R.font.urbanist_regular)),
+                        fontWeight = FontWeight(600),
+                        color = Color(0xFFF83758),
                     )
                 }
             }
         }
     }
 }
-
 @Composable
 fun CustomOutlinedTextField(
     placeholderText: String,
@@ -243,7 +232,11 @@ fun CustomOutlinedTextField(
             modifier = Modifier
                 .width(317.dp)
                 .height(55.dp)
-                .border(width = 1.dp, color = Color(0xFF9C27B0), shape = RoundedCornerShape(size = 10.dp))
+                .border(
+                    width = 1.dp,
+                    color = Color(0xFF9C27B0),
+                    shape = RoundedCornerShape(size = 10.dp)
+                )
                 .background(color = Color(0xFF111111), shape = RoundedCornerShape(size = 10.dp))
         ) {
             Row(
@@ -326,23 +319,20 @@ fun CustomOutlinedTextField(
         }
     }
 }
-
-
-// Social Media Button
 @Composable
 fun SocialIconButton(icon: Int) {
     Box(
         modifier = Modifier
-            .size(60.dp)
-            .border(width = 1.dp, color = Color(0xFF9C27B0), shape = RoundedCornerShape(30.dp))
-            .background(color = Color.White, shape = RoundedCornerShape(30.dp))
+            .size(48.dp)
             .clickable { /* Handle social login */ },
         contentAlignment = Alignment.Center
     ) {
         Image(
             painter = painterResource(id = icon),
             contentDescription = null,
-            modifier = Modifier.size(24.dp)
+            modifier = Modifier.fillMaxSize(),
+            contentScale = ContentScale.Fit
         )
     }
 }
+

@@ -10,6 +10,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
@@ -23,201 +24,97 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-
 @Composable
 fun LoginScreen(navController: NavController) {
+    // Define Urbanist font family
+    val urbanistFont = FontFamily(Font(R.font.urbanist_regular))
+
     Box(
         modifier = Modifier
             .fillMaxSize()
+            .background(Color(0xFF111111))
     ) {
-        // Dark textured background
+        // Add any background image if needed
         Image(
             painter = painterResource(id = R.drawable.background),
-            contentDescription = "Background Image",
-            contentScale = ContentScale.Crop,
-            modifier = Modifier.fillMaxSize()
+            contentDescription = "Background texture",
+            modifier = Modifier.fillMaxSize(),
+            contentScale = ContentScale.Crop
         )
 
         Column(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(horizontal = 24.dp),
-            horizontalAlignment = Alignment.CenterHorizontally
+            horizontalAlignment = Alignment.Start
         ) {
-            // Title container with proper alignment
-            Box(
-                modifier = Modifier
-                    .width(317.dp)
-                    .padding(top = 80.dp)
-            ) {
-                // Welcome Text aligned to the left
-                Text(
-                    text = "Welcome\nBack!",
-                    style = TextStyle(
-                        fontSize = 36.sp,
-                        lineHeight = 43.sp,
-                        fontFamily = FontFamily(Font(R.font.domine)),
-                        fontWeight = FontWeight(700),
-                        color = Color(0xFFFFFFFF)
-                    ),
-                    modifier = Modifier.align(Alignment.TopStart)
-                )
-            }
+            Spacer(modifier = Modifier.weight(0.2f))
 
-            Spacer(modifier = Modifier.height(48.dp))
+            // Welcome Back Text
+            Text(
+                text = "Welcome\nBack!",
+                color = Color.White,
+                fontSize = 32.sp,
+                fontFamily = FontFamily(Font(R.font.domine)),
+                fontWeight = FontWeight.Bold,
+                textAlign = TextAlign.Start,
+                modifier = Modifier.padding(bottom = 32.dp)
+            )
 
-            // Username Field
-            CustomOutlinedTextField1(
+            // Username/Email TextField
+            CustomOutlinedTextField(
                 placeholderText = "Username or Email",
-                leadingIcon = R.drawable.user
+                leadingIcon = R.drawable.user,
+                isPassword = false
             )
 
-            Spacer(modifier = Modifier.height(20.dp))
+            Spacer(modifier = Modifier.height(16.dp))
 
-            // Password Field
-            CustomOutlinedTextField1(
-                placeholderText = "Password",
-                leadingIcon = R.drawable.lock,
-                trailingIcon = R.drawable.eye,
-                isPassword = true
-            )
+            // Password TextField with Forgot Password
+            Column {
+                CustomOutlinedTextField(
+                    placeholderText = "Password",
+                    leadingIcon = R.drawable.lock,
+                    trailingIcon = R.drawable.eye,
+                    isPassword = true
+                )
 
-            // Forgot Password with proper alignment
-            Box(
-                modifier = Modifier
-                    .width(317.dp)
-                    .padding(top = 8.dp)
-            ) {
+                // Forgot Password - Aligned to end
                 Text(
                     text = "Forgot Password?",
-                    style = TextStyle(
-                        fontSize = 12.sp,
-                        fontFamily = FontFamily(Font(R.font.montserrat)),
-                        fontWeight = FontWeight.Normal,
-                        color = Color(0xFFF83758),
-                    ),
-                    modifier = Modifier.align(Alignment.TopEnd)
+                    color = Color(0xFFFF0033),
+                    fontSize = 12.sp,
+                    fontFamily = urbanistFont,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(top = 8.dp, end = 8.dp),
+                    textAlign = TextAlign.End
                 )
             }
 
-            Spacer(modifier = Modifier.height(40.dp))
+            Spacer(modifier = Modifier.height(32.dp))
 
             // Login Button
             Button(
                 onClick = { navController.navigate("home") },
                 modifier = Modifier
-                    .width(317.dp)
-                    .height(55.dp),
-                shape = RoundedCornerShape(4.dp),
-                colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF9B51E0))
+                    .fillMaxWidth()
+                    .height(56.dp),
+                shape = RoundedCornerShape(30.dp),
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = Color(0xFF9C27B0)
+                )
             ) {
                 Text(
                     text = "Login",
-                    style = TextStyle(
-                        fontSize = 20.sp,
-                        fontFamily = FontFamily(Font(R.font.open_sans)),
-                        fontWeight = FontWeight(600),
-                        color = Color.White
-                    )
+                    fontSize = 16.sp,
+                    fontFamily = urbanistFont,
+                    fontWeight = FontWeight.Medium,
+                    color = Color.White
                 )
             }
-        }
-    }
-}
 
-// Custom Outlined TextField - same as in SignUpScreen for consistency
-@Composable
-fun CustomOutlinedTextField1(
-    placeholderText: String,
-    leadingIcon: Int,
-    trailingIcon: Int? = null,
-    isPassword: Boolean = false
-) {
-    val text = remember { mutableStateOf("") }
-    val passwordVisible = remember { mutableStateOf(false) }
-
-    Box(
-        modifier = Modifier
-            .fillMaxWidth(),
-        contentAlignment = Alignment.Center // Center the field in the screen
-    ) {
-        // Custom TextField using Box and basic components
-        Box(
-            modifier = Modifier
-                .border(width = 1.dp, color = Color(0xFF9C27B0), shape = RoundedCornerShape(size = 10.dp))
-                .width(317.dp)
-                .height(55.dp)
-                .background(color = Color(0xFF111111), shape = RoundedCornerShape(size = 10.dp))
-                .fillMaxWidth()
-        ) {
-            Row(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(horizontal = 16.dp),
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                // Leading Icon
-                Image(
-                    painter = painterResource(id = leadingIcon),
-                    contentDescription = null,
-                    modifier = Modifier.size(20.dp)
-                )
-
-                Spacer(modifier = Modifier.width(12.dp))
-
-                // Text Field
-                BasicTextField(
-                    value = text.value,
-                    onValueChange = { text.value = it },
-                    singleLine = true,
-                    textStyle = TextStyle(
-                        color = Color(0xFF676767),
-                        fontSize = 14.sp,
-                        fontWeight = FontWeight(400),
-                        fontFamily = FontFamily(Font(R.font.open_sans)),
-                        textAlign = TextAlign.Center,
-                    ),
-                    visualTransformation = if (isPassword && !passwordVisible.value)
-                        PasswordVisualTransformation() else VisualTransformation.None,
-                    modifier = Modifier
-                        .weight(1f)
-                        .fillMaxHeight(),
-                    decorationBox = { innerTextField ->
-                        Box(
-                            modifier = Modifier.fillMaxSize(),
-                            contentAlignment = Alignment.CenterStart
-                        ) {
-                            if (text.value.isEmpty()) {
-                                Text(
-                                    text = placeholderText,
-                                    style = TextStyle(
-                                        fontSize = 14.sp,
-                                        fontFamily = FontFamily(Font(R.font.open_sans)),
-                                        fontWeight = FontWeight.Normal,
-                                        color = Color(0xFFAAAAAA),
-                                    )
-                                )
-                            }
-                            innerTextField()
-                        }
-                    }
-                )
-
-                // Trailing Icon
-                trailingIcon?.let {
-                    Image(
-                        painter = painterResource(id = it),
-                        contentDescription = if (isPassword) "Toggle password visibility" else null,
-                        modifier = Modifier
-                            .size(20.dp)
-                            .clickable {
-                                if (isPassword) {
-                                    passwordVisible.value = !passwordVisible.value
-                                }
-                            }
-                    )
-                }
-            }
+            Spacer(modifier = Modifier.weight(0.8f))
         }
     }
 }
