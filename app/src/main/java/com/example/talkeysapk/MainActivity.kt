@@ -47,6 +47,7 @@ fun AppNavigation() {
         composable("event_created_successfully") { EventVerificationScreen(navController) }
         composable("terms_conditions") { TermsAndConditionsScreen(navController) }
         composable("privacy_policy") { privacyPolicy(navController) }
+        composable("screen_not_found"){ ScreenNotFound(navController) }
 
 
         composable(

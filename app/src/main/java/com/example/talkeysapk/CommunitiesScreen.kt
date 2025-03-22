@@ -122,4 +122,3 @@ fun CommunityTitle(title: String) {
         modifier = Modifier.padding(start = 30.dp)
     )
 }
-

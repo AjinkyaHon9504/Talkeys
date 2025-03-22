@@ -39,7 +39,6 @@ fun Footer(modifier: Modifier = Modifier,navController: NavController) {
                 .background(color = Color.White)
         )
         Spacer(modifier = Modifier.height(8.dp))
-
         Row(
             modifier = Modifier
                 .fillMaxWidth()

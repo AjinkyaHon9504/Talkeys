@@ -1,6 +1,7 @@
 package com.example.talkeysapk
 
 import androidx.compose.animation.animateColorAsState
+import androidx.compose.animation.core.FastOutSlowInEasing
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.background
@@ -10,7 +11,6 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
@@ -25,13 +25,29 @@ import androidx.navigation.compose.rememberNavController
 
 @Composable
 fun BottomBar(navController: NavController, scrollState: ScrollState, modifier: Modifier = Modifier) {
-    // Get current route from NavController
     val currentRoute = navController.currentBackStackEntryAsState().value?.destination?.route
 
+    // Animate the background color based on scroll position and route
     val backgroundColor by animateColorAsState(
-        targetValue = if (scrollState.value > 100) Color.Black.copy(alpha = 0.3f)
-        else Color.White.copy(alpha = 0.1f),
-        animationSpec = tween(durationMillis = 500)
+        targetValue = when (currentRoute) {
+            "home" -> when {
+                scrollState.value > 100 -> Color(0xFF1A1A1A)
+                else -> Color(0xFF0A0A0A)
+            }
+            "events", "communities" -> when {
+                scrollState.value > 100 -> Color(0xFF151515)
+                else -> Color(0xFF0D0D0D)
+            }
+            "explore" -> when {
+                scrollState.value > 100 -> Color(0xFF131313)
+                else -> Color(0xFF080808)
+            }
+            else -> Color(0xFF000000)
+        },
+        animationSpec = tween(
+            durationMillis = 300, // Faster animation for more responsive feel
+            easing = FastOutSlowInEasing
+        )
     )
 
     Box(
@@ -46,7 +62,6 @@ fun BottomBar(navController: NavController, scrollState: ScrollState, modifier: 
             )
             .background(color = backgroundColor, shape = RoundedCornerShape(30.dp))
             .graphicsLayer {
-                alpha = 0.9f
                 shadowElevation = 10f
                 shape = RoundedCornerShape(30.dp)
                 clip = true
@@ -87,7 +102,7 @@ fun BottomBar(navController: NavController, scrollState: ScrollState, modifier: 
                     contentDescription = "Explore"
                 ),
                 NavigationItem(
-                    route = "globe",
+                    route = "screen_not_found",
                     normalIcon = R.drawable.ic_globe_icon,
                     selectedIcon = R.drawable.ic_community_selected,
                     contentDescription = "Globe"
