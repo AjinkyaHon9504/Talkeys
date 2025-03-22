@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -24,6 +25,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -36,7 +38,6 @@ fun ScreenNotFound(navController: NavController) {
             .fillMaxSize()
             .background(Color.Black)
     ) {
-        // Background image (if you want to keep consistent with other screens)
         Image(
             painter = painterResource(id = R.drawable.background),
             contentDescription = "Background",
@@ -51,32 +52,34 @@ fun ScreenNotFound(navController: NavController) {
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {
-            // Not Found Sticker
+            Spacer(modifier = Modifier.height(32.dp))
+            
             Image(
                 painter = painterResource(id = R.drawable.screen_not_found),
                 contentDescription = "Screen Not Found",
                 modifier = Modifier
-                    .size(200.dp)
-                    .padding(bottom = 24.dp),
+                    .size(300.dp)
+                    .padding(bottom = 32.dp),
                 contentScale = ContentScale.Fit
             )
 
+            Spacer(modifier = Modifier.height(24.dp))
             // Error Message
             Text(
-                text = "This Page is still\n under construction",
+                text = "This page is still under construction",
+
+                // H2/Regular
                 style = TextStyle(
-                    fontSize = 24.sp,
-                    fontFamily = FontFamily(Font(R.font.urbanist_bold)),
-                    color = Color.White,
-                    textAlign = TextAlign.Center
+                    fontSize = 43.sp,
+                    fontFamily = FontFamily(Font(R.font.urbanist_regular)),
+                    fontWeight = FontWeight(400),
+                    color = Color(0xFFFFFFFF),
+                    textAlign = TextAlign.Center,
                 )
             )
 
+
             Spacer(modifier = Modifier.height(16.dp))
-
-
-
-          //  Spacer(modifier = Modifier.height(32.dp))
 
             // Back to Home Button
             Button(
