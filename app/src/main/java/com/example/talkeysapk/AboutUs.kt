@@ -7,10 +7,8 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.icons.Icons
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.Icon
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -27,13 +25,9 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import com.example.talkies.ui.HomeTopBar
 import androidx.compose.animation.animateContentSize
-import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.*
-import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -279,10 +273,10 @@ fun MissionVisionValuesCard(cardWidth: Dp) {
                 .background(darkerPurple, shape = RoundedCornerShape(16.dp)),
             horizontalArrangement = Arrangement.spacedBy(12.dp)
         ) {
-            item { TabButton("Mission", R.drawable.mission, selectedTab == "Mission") { selectedTab = "Mission" } }
-            item { TabButton("Vision", R.drawable.vision, selectedTab == "Vision") { selectedTab = "Vision" } }
-            item { TabButton("Values", R.drawable.values, selectedTab == "Values") { selectedTab = "Values" } }
-            item { TabButton("Community", R.drawable.community, selectedTab == "Community") { selectedTab = "Community" } }
+            item { TabButton("Mission", R.drawable.our_mission_icon, selectedTab == "Mission") { selectedTab = "Mission" } }
+            item { TabButton("Vision", R.drawable.our_vision_icon, selectedTab == "Vision") { selectedTab = "Vision" } }
+            item { TabButton("Values", R.drawable.our_values_icon, selectedTab == "Values") { selectedTab = "Values" } }
+            item { TabButton("Community", R.drawable.our_communities_icon, selectedTab == "Community") { selectedTab = "Community" } }
         }
 
         // Content Based on Selected Tab
@@ -367,11 +361,11 @@ fun TabButton(text: String, iconRes: Int, selected: Boolean, onClick: () -> Unit
 // Helper functions to get the appropriate resources and content
 fun getTabIcon(tab: String): Int {
     return when (tab) {
-        "Mission" -> R.drawable.mission
-        "Vision" -> R.drawable.vision
-        "Values" -> R.drawable.values
-        "Community" -> R.drawable.community
-        else -> R.drawable.mission
+        "Mission" -> R.drawable.our_mission_icon
+        "Vision" -> R.drawable.our_vision_icon
+        "Values" -> R.drawable.our_values_icon
+        "Community" -> R.drawable.our_communities_icon
+        else -> R.drawable.our_mission_icon
     }
 }
 

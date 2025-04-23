@@ -16,7 +16,6 @@ import androidx.compose.ui.draw.paint
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.InspectableModifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
@@ -26,7 +25,6 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import com.example.talkies.ui.HomeTopBar
 
 @Composable
 fun ExplorePage(navController: NavController) {
@@ -167,6 +165,7 @@ fun ExplorePage(navController: NavController) {
                                 .width(224.dp)
                                 .height(27.dp)
                                 .background(Color(0x4DF9F9F9), shape = RoundedCornerShape(3.dp))
+                                .clickable { /* Remove this if using BasicTextField's focus */ }
                                 .padding(horizontal = 12.dp),
                             contentAlignment = Alignment.CenterStart
                         ) {
@@ -175,29 +174,38 @@ fun ExplorePage(navController: NavController) {
                                 verticalAlignment = Alignment.CenterVertically,
                                 modifier = Modifier.fillMaxSize()
                             ) {
-                                BasicTextField(
-                                    value = searchQuery.value,
-                                    onValueChange = { searchQuery.value = it },
-                                    textStyle = TextStyle(
-                                        fontSize = 14.sp,
-                                        fontFamily = FontFamily(Font(R.font.urbanist_regular)),
-                                        fontWeight = FontWeight(300),
-                                        color = Color.White
-                                    ),
-                                    modifier = Modifier.weight(1f)
-                                )
-
-                                if (searchQuery.value.isEmpty()) {
-                                    Text(
-                                        text = "Search event/community",
-                                        style = TextStyle(
+                                Box(
+                                    modifier = Modifier.weight(1f),
+                                    contentAlignment = Alignment.CenterStart
+                                ) {
+                                    BasicTextField(
+                                        value = searchQuery.value,
+                                        onValueChange = { searchQuery.value = it },
+                                        textStyle = TextStyle(
                                             fontSize = 14.sp,
                                             fontFamily = FontFamily(Font(R.font.urbanist_regular)),
                                             fontWeight = FontWeight(300),
-                                            color = Color(0xFFA3A3A3)
-                                        )
+                                            color = Color.White
+                                        ),
+                                        modifier = Modifier.fillMaxWidth(),
+                                        singleLine = true
                                     )
+
+                                    if (searchQuery.value.isEmpty()) {
+                                        Text(
+                                            text = "Search event/community",
+                                            style = TextStyle(
+                                                fontSize = 14.sp,
+                                                fontFamily = FontFamily(Font(R.font.urbanist_regular)),
+                                                fontWeight = FontWeight(300),
+                                                color = Color(0xFFA3A3A3),
+                                                textAlign = TextAlign.Left
+                                            )
+                                        )
+                                    }
                                 }
+
+                                Spacer(modifier = Modifier.width(8.dp))
 
                                 Icon(
                                     painter = painterResource(id = R.drawable.ic_search_icon),
@@ -205,7 +213,6 @@ fun ExplorePage(navController: NavController) {
                                     tint = Color.White,
                                     modifier = Modifier
                                         .size(18.dp)
-                                        .clickable { /* Handle search */ }
                                 )
                             }
                         }
@@ -299,7 +306,6 @@ fun UserMessageBox(message: UserMessage) {
             Column(Modifier
                 .width(166.dp)
                 .height(143.dp)
-
             ) {
                 // Profile Info Row
                 Row(verticalAlignment = Alignment.CenterVertically) {
@@ -321,6 +327,8 @@ fun UserMessageBox(message: UserMessage) {
                         )
                     )
                 }
+                
+                Spacer(modifier = Modifier.height(10.dp))  // Added spacer between username and message
 
                 // Message Text
                 Text(
