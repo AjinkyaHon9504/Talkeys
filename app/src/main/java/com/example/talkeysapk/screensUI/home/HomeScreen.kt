@@ -1,4 +1,4 @@
-package com.example.talkeysapk.screens.home
+package com.example.talkeysapk.screensUI.home
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -26,16 +26,16 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import com.example.talkeysapk.screens.common.BottomBar
+import com.example.talkeysapk.screensUI.common.BottomBar
 import com.example.talkeysapk.data.model.Event
-import com.example.talkeysapk.screens.common.EventCard
-import com.example.talkeysapk.screens.common.Footer
-import com.example.talkeysapk.screens.common.HomeTopBar
-import com.example.talkeysapk.screens.common.InfluencerCard
-import com.example.talkeysapk.InfluencerHomeScreen
+import com.example.talkeysapk.screensUI.common.EventCard
+import com.example.talkeysapk.screensUI.common.Footer
+import com.example.talkeysapk.screensUI.common.HomeTopBar
+import com.example.talkeysapk.screensUI.common.InfluencerCard
 import com.example.talkeysapk.R
-import com.example.talkeysapk.screens.community.CommunityRow
-import com.example.talkeysapk.screens.events.CategoryTitle
+import com.example.talkeysapk.data.model.InfluencerHomeScreen
+import com.example.talkeysapk.screensUI.community.CommunityRow
+import com.example.talkeysapk.screensUI.events.CategoryTitle
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
