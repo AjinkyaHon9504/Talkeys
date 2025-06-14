@@ -28,25 +28,24 @@ import com.example.talkeysapk.R
 fun BottomBar(navController: NavController, scrollState: ScrollState, modifier: Modifier = Modifier) {
     val currentRoute = navController.currentBackStackEntryAsState().value?.destination?.route
 
-    // Animate the background color based on scroll position and route
     val backgroundColor by animateColorAsState(
         targetValue = when (currentRoute) {
             "home" -> when {
-                scrollState.value > 100 -> Color(0xFF1A1A1A)
-                else -> Color(0xFF0A0A0A)
+                scrollState.value > 100 -> Color(0xFF1A1A1A).copy(alpha = 0.65f)
+                else -> Color(0xFF0A0A0A).copy(alpha = 0.5f)
             }
             "events", "communities" -> when {
-                scrollState.value > 100 -> Color(0xFF151515)
-                else -> Color(0xFF0D0D0D)
+                scrollState.value > 100 -> Color(0xFF151515).copy(alpha = 0.65f)
+                else -> Color(0xFF0D0D0D).copy(alpha = 0.5f)
             }
             "explore" -> when {
-                scrollState.value > 100 -> Color(0xFF131313)
-                else -> Color(0xFF080808)
+                scrollState.value > 100 -> Color(0xFF131313).copy(alpha = 0.6f)
+                else -> Color(0xFF080808).copy(alpha = 0.45f)
             }
-            else -> Color(0xFF000000)
+            else -> Color(0xFF000000).copy(alpha = 0.4f)
         },
         animationSpec = tween(
-            durationMillis = 300, // Faster animation for more responsive feel
+            durationMillis = 300,
             easing = FastOutSlowInEasing
         )
     )
@@ -57,9 +56,9 @@ fun BottomBar(navController: NavController, scrollState: ScrollState, modifier: 
             .offset(y = (-20).dp)
             .padding(bottom = 16.dp)
             .shadow(
-                elevation = 35.dp,
-                spotColor = Color(0x1AFFFFFF),
-                ambientColor = Color(0x1AFFFFFF)
+                elevation = 20.dp,
+                spotColor = Color.Black.copy(alpha = 0.15f),
+                ambientColor = Color.Black.copy(alpha = 0.1f)
             )
             .background(color = backgroundColor, shape = RoundedCornerShape(30.dp))
             .graphicsLayer {
@@ -125,14 +124,13 @@ fun BottomBar(navController: NavController, scrollState: ScrollState, modifier: 
                                 launchSingleTop = true
                             }
                         },
-                    tint = Color.Unspecified // Keeps original icon colors
+                    tint = Color.Unspecified
                 )
             }
         }
     }
 }
 
-// Data class to hold navigation item information
 data class NavigationItem(
     val route: String,
     val normalIcon: Int,
