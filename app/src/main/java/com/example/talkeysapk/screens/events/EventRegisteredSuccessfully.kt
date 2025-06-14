@@ -1,14 +1,8 @@
-package com.example.talkeysapk
+package com.example.talkeysapk.screens.events
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -28,12 +22,15 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import com.example.talkeysapk.screens.common.HomeTopBar
+import com.example.talkeysapk.R
 
 @Composable
-fun EventVerificationScreen(navController: NavController) {
+fun RegistrationSuccessScreen(navController: NavController) {
     Box(
         modifier = Modifier
             .fillMaxSize()
+            .background(Color.Black)
     ) {
         Image(
             painter = painterResource(id = R.drawable.background),
@@ -46,66 +43,61 @@ fun EventVerificationScreen(navController: NavController) {
             modifier = Modifier.fillMaxSize(),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
+            // Top bar
             HomeTopBar(navController = navController)
 
-            Spacer(modifier = Modifier.height(98.dp))
+            // Spacer after top bar
+            Spacer(modifier = Modifier.height(88.dp))
 
+            // Success message text
             Text(
-                text = "Your Event is sent for verification",
+                text = "Registration Successful",
                 style = TextStyle(
                     fontSize = 34.sp,
                     fontFamily = FontFamily(Font(R.font.urbanist_regular)),
-                    fontWeight = FontWeight(700),
+                    fontWeight = FontWeight(600),
                     color = Color(0xFFFFFFFF),
                     textAlign = TextAlign.Center,
-                ),
-                modifier = Modifier.padding(horizontal = 24.dp)
-            )
-
-            Spacer(modifier = Modifier.height(20.dp))
-
-
-            Text(
-                text = "It will be listed once it is approved by Team Talkeys",
-                style = TextStyle(
-                    fontSize = 16.sp,
-                    fontFamily = FontFamily(Font(R.font.urbanist_regular)),
-                    fontWeight = FontWeight(500),
-                    color = Color(0xFFFFFFFF),
-                    textAlign = TextAlign.Center,
-                ),
-                modifier = Modifier.padding(horizontal = 32.dp)
-            )
-
-            Spacer(modifier = Modifier.padding(20.dp))
-
-            Box(
-                modifier = Modifier
-                    .height(240.dp)
-                    .fillMaxWidth()
-                    .padding(horizontal = 40.dp),
-                contentAlignment = Alignment.Center
-            ) {
-                Image(
-                    painter = painterResource(id = R.drawable.event_created_sticker),
-                    contentDescription = "Verification Sticker",
-                    modifier = Modifier.fillMaxSize(),
-                    contentScale = ContentScale.Fit
                 )
-            }
-            Spacer(modifier = Modifier.weight(1f))
+            )
+            Spacer(modifier = Modifier.padding(4.dp))
+            Text(
+                text="Please check your email for verification",
+                style = TextStyle(
+                    fontSize = 14.sp,
+                    fontFamily = FontFamily(Font(R.font.urbanist_light)),
+                    fontWeight = FontWeight(400),
+                    color = Color(0xFFFFFFFF),
+                    textAlign = TextAlign.Center,
+                )
 
 
-            Button(
-                onClick = { navController.navigate("home") {
-                    popUpTo("home") { inclusive = true }
-                }},
+            )
+
+            // Spacer after text
+            Spacer(modifier = Modifier.height(36.dp))
+
+            // Sticker image
+            Image(
+                painter = painterResource(id = R.drawable.event_registered_successfully),
+                contentDescription = "Success Sticker",
                 modifier = Modifier
-                    .padding(bottom = 40.dp)
-                    .width(240.dp)
-                    .height(56.dp),
-                colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF8C52FF)),
-                shape = RoundedCornerShape(16.dp)
+                    .width(325.dp)
+                    .height(312.dp)
+            )
+
+            // Spacer before button
+            Spacer(modifier = Modifier.height(42.dp))
+
+            // Button with navigation
+            Button(
+                onClick = { navController.navigate("home") },
+                modifier = Modifier
+                    .width(250.dp)
+                    .height(39.dp),
+                shape = RoundedCornerShape(8.dp),
+                colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF8A44CB)),
+                contentPadding = PaddingValues(start = 20.dp, top = 10.dp, end = 20.dp, bottom = 10.dp)
             ) {
                 Text(
                     text = "Back to Homepage",
@@ -113,7 +105,7 @@ fun EventVerificationScreen(navController: NavController) {
                         fontSize = 16.sp,
                         fontFamily = FontFamily(Font(R.font.urbanist_regular)),
                         fontWeight = FontWeight(500),
-                        color = Color(0xFFFFFFFF),
+                        color = Color.White,
                         textAlign = TextAlign.Center,
                     )
                 )

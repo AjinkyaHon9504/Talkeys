@@ -1,4 +1,6 @@
-package com.example.talkeysapk
+package com.example.talkeysapk.screens.home
+
+import com.example.talkeysapk.R
 
 data class HomePageCommunity(val name: String, val imageRes: Int, val description: String)
 

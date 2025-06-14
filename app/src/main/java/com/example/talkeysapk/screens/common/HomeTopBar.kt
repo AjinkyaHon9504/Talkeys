@@ -1,4 +1,4 @@
-package com.example.talkeysapk
+package com.example.talkeysapk.screens.common
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -25,6 +25,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Popup
 import androidx.navigation.NavController
+import com.example.talkeysapk.R
 
 @Composable
 fun MenuOption(icon: Int, text: String, onClick: () -> Unit) {

@@ -1,4 +1,4 @@
-package com.example.talkeysapk
+package com.example.talkeysapk.screens.community
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -25,6 +25,12 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.style.TextAlign
 import androidx.navigation.NavController
+import com.example.talkeysapk.data.model.Event
+import com.example.talkeysapk.screens.home.EventRow
+import com.example.talkeysapk.screens.common.Footer
+import com.example.talkeysapk.screens.home.HomePageCommunity
+import com.example.talkeysapk.screens.common.HomeTopBar
+import com.example.talkeysapk.R
 
 @Composable
 fun CommunityInfo(navController: NavController,community: HomePageCommunity) {
@@ -181,7 +187,7 @@ fun CommunityInfo(navController: NavController,community: HomePageCommunity) {
                             Spacer(modifier = Modifier.height(16.dp)) // Space before events
 
                             EventRow(
-                                events = Event.getAllEvents(),
+                                events = Event.Companion.getAllEvents(),
                                 navController = navController
                             )
                         }

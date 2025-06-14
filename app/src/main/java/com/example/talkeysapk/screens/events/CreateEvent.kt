@@ -1,4 +1,4 @@
-package com.example.talkeysapk
+package com.example.talkeysapk.screens.events
 import androidx.compose.foundation.background
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
@@ -20,6 +20,9 @@ import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.navigation.NavController
+import com.example.talkeysapk.screens.common.Footer
+import com.example.talkeysapk.screens.common.HomeTopBar
+import com.example.talkeysapk.R
 
 @Composable
 fun CreateEventScreen(navController: NavController) {
@@ -83,7 +86,7 @@ fun CreateEventScreen(navController: NavController) {
 
             Spacer(modifier = Modifier.height(20.dp))
 
-            Footer(navController=navController)
+            Footer(navController = navController)
         }
     }
 }

@@ -1,4 +1,4 @@
-package com.example.talkeysapk
+package com.example.talkeysapk.screens.home
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -12,10 +12,8 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
@@ -28,15 +26,21 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import com.airbnb.lottie.compose.LottieAnimation
-import com.airbnb.lottie.compose.LottieCompositionSpec
-import com.airbnb.lottie.compose.animateLottieCompositionAsState
-import com.airbnb.lottie.compose.rememberLottieComposition
+import com.example.talkeysapk.screens.common.BottomBar
+import com.example.talkeysapk.data.model.Event
+import com.example.talkeysapk.screens.common.EventCard
+import com.example.talkeysapk.screens.common.Footer
+import com.example.talkeysapk.screens.common.HomeTopBar
+import com.example.talkeysapk.screens.common.InfluencerCard
+import com.example.talkeysapk.InfluencerHomeScreen
+import com.example.talkeysapk.R
+import com.example.talkeysapk.screens.community.CommunityRow
+import com.example.talkeysapk.screens.events.CategoryTitle
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeScreen(navController: NavController) {
-    val eventList = Event.getAllEvents()
+    val eventList = Event.Companion.getAllEvents()
     val communityList = CommunityData.getAllCommunities()
 
     Box(modifier = Modifier.fillMaxSize()) {

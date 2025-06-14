@@ -1,4 +1,4 @@
-package com.example.talkeysapk
+package com.example.talkeysapk.screens.home
 
 import android.content.Intent
 import android.os.Bundle
@@ -13,6 +13,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import com.example.talkeysapk.MainActivity
+import com.example.talkeysapk.R
 import kotlinx.coroutines.delay
 
 class SplashActivity : ComponentActivity() {

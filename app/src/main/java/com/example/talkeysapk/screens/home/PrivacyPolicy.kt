@@ -1,4 +1,4 @@
-package com.example.talkeysapk
+package com.example.talkeysapk.screens.home
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.animateFloatAsState
@@ -28,7 +28,12 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.compose.foundation.border
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.ui.draw.clip
+import com.example.talkeysapk.screens.common.Footer
+import com.example.talkeysapk.screens.common.HomeTopBar
+import com.example.talkeysapk.R
 
 
 @Composable
@@ -239,7 +244,7 @@ fun ExpandablePrivacyPolicy(title: String, content: String) {
                     contentScale = ContentScale.FillBounds,
                     modifier = Modifier
                         .matchParentSize()
-                        .clip(androidx.compose.foundation.shape.RoundedCornerShape(16.dp))
+                        .clip(RoundedCornerShape(16.dp))
                 )
             } else {
                 // Regular background when collapsed
@@ -274,7 +279,7 @@ fun ExpandablePrivacyPolicy(title: String, content: String) {
                             .size(48.dp)
                             .background(
                                 color = iconBackgroundColor,
-                                shape = androidx.compose.foundation.shape.CircleShape
+                                shape = CircleShape
                             )
                     ) {
                         // Choose icon based on title - Fixed the conditions
@@ -402,7 +407,7 @@ fun ExpandablePrivacyPolicy(title: String, content: String) {
                             .size(48.dp)
                             .background(
                                 color = iconBackgroundColor, // Using the shared variable here
-                                shape = androidx.compose.foundation.shape.CircleShape
+                                shape = CircleShape
                             )
                     ) {
                         Icon(

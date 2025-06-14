@@ -1,4 +1,4 @@
-package com.example.talkeysapk
+package com.example.talkeysapk.screens.home
 
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
@@ -25,6 +25,12 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import com.example.talkeysapk.screens.common.BottomBar
+import com.example.talkeysapk.data.model.Event
+import com.example.talkeysapk.screens.common.Footer
+import com.example.talkeysapk.screens.common.HomeTopBar
+import com.example.talkeysapk.R
+import com.example.talkeysapk.screens.community.CommunityRow
 
 @Composable
 fun ExplorePage(navController: NavController) {
@@ -246,7 +252,7 @@ fun ExplorePage(navController: NavController) {
                     )
 
                     Spacer(modifier = Modifier.height(14.dp))
-                    EventRow(events = Event.getAllEvents(), navController = navController)
+                    EventRow(events = Event.Companion.getAllEvents(), navController = navController)
 
                     Spacer(modifier = Modifier.height(32.dp))
 

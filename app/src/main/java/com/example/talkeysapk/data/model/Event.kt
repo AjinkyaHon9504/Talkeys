@@ -1,4 +1,6 @@
-package com.example.talkeysapk
+package com.example.talkeysapk.data.model
+
+import com.example.talkeysapk.R
 
 data class Event(val title: String, val location: String, val imageRes: Int, val category: String,val date: String, val festName: String? = null) {
     companion object {

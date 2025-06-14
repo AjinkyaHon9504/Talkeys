@@ -1,4 +1,4 @@
-package com.example.talkeysapk
+package com.example.talkeysapk.screens.events
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -20,9 +20,16 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.compose.ui.unit.dp
+import com.example.talkeysapk.screens.common.BottomBar
+import com.example.talkeysapk.data.model.Event
+import com.example.talkeysapk.screens.home.EventRow
+import com.example.talkeysapk.screens.common.Footer
+import com.example.talkeysapk.screens.common.HomeTopBar
+import com.example.talkeysapk.R
+
 @Composable
 fun ExploreEventsScreen(navController: NavController) {
-    val allEvents = Event.getAllEvents()
+    val allEvents = Event.Companion.getAllEvents()
     val techEvents = allEvents.filter { it.category == "Tech" }
     val musicEvents = allEvents.filter { it.category == "Music" }
     val sportsEvents = allEvents.filter { it.category == "Sports" }
@@ -79,13 +86,13 @@ fun ExploreEventsScreen(navController: NavController) {
                     // Category 2: Music Events
                     if (musicEvents.isNotEmpty()) {
                         item { CategoryTitle("Music Events") }
-                        item { EventRow(events = musicEvents,navController = navController) }
+                        item { EventRow(events = musicEvents, navController = navController) }
                     }
 
                     // Category 3: Sports Events
                     if (sportsEvents.isNotEmpty()) {
                         item { CategoryTitle("Sports Events") }
-                        item { EventRow(events = sportsEvents,navController = navController) }
+                        item { EventRow(events = sportsEvents, navController = navController) }
                     }
 
                     item { Spacer(modifier = Modifier.height(5.dp)) }
