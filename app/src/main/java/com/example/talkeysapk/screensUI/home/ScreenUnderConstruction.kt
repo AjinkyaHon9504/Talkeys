@@ -1,4 +1,4 @@
-package com.example.talkeysapk.screens.home
+package com.example.talkeysapk.screensUI.home
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background

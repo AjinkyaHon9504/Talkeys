@@ -1,4 +1,4 @@
-package com.example.talkeysapk.screens.events
+package com.example.talkeysapk.screensUI.events
 
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.tween
@@ -33,10 +33,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
-import com.example.talkeysapk.screens.common.BottomBar
+import com.example.talkeysapk.screensUI.common.BottomBar
 import com.example.talkeysapk.data.model.Event
-import com.example.talkeysapk.screens.common.Footer
-import com.example.talkeysapk.screens.common.HomeTopBar
+import com.example.talkeysapk.screensUI.common.Footer
+import com.example.talkeysapk.screensUI.common.HomeTopBar
 import com.example.talkeysapk.R
 import kotlinx.coroutines.delay
 

@@ -1,4 +1,4 @@
-package com.example.talkeysapk.screens.home
+package com.example.talkeysapk.screensUI.home
 
 import android.content.Intent
 import android.os.Bundle

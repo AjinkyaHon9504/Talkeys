@@ -1,4 +1,4 @@
-package com.example.talkeysapk.screens.community
+package com.example.talkeysapk.screensUI.community
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -22,12 +22,12 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import com.example.talkeysapk.screens.common.BottomBar
-import com.example.talkeysapk.screens.common.CommunityCard
-import com.example.talkeysapk.screens.home.CommunityData
-import com.example.talkeysapk.screens.common.Footer
-import com.example.talkeysapk.screens.home.HomePageCommunity
-import com.example.talkeysapk.screens.common.HomeTopBar
+import com.example.talkeysapk.screensUI.common.BottomBar
+import com.example.talkeysapk.screensUI.common.CommunityCard
+import com.example.talkeysapk.screensUI.home.CommunityData
+import com.example.talkeysapk.screensUI.common.Footer
+import com.example.talkeysapk.screensUI.home.HomePageCommunity
+import com.example.talkeysapk.screensUI.common.HomeTopBar
 import com.example.talkeysapk.R
 
 @Composable

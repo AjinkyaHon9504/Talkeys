@@ -1,51 +1,32 @@
 package com.example.talkeysapk
 
-import android.os.Bundle
-import androidx.activity.ComponentActivity
-import androidx.activity.compose.setContent
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.example.talkeysapk.data.model.Event
-import com.example.talkeysapk.screens.authentication.LoginScreen
-import com.example.talkeysapk.screens.authentication.SignUpScreen
-import com.example.talkeysapk.screens.community.CommunitiesScreen
-import com.example.talkeysapk.screens.community.CommunityInfo
-import com.example.talkeysapk.screens.events.CreateEventScreen
-import com.example.talkeysapk.screens.events.EventDetailScreen
-import com.example.talkeysapk.screens.events.EventRegistraion
-import com.example.talkeysapk.screens.events.EventVerificationScreen
-import com.example.talkeysapk.screens.events.ExploreEventsScreen
-import com.example.talkeysapk.screens.events.RegistrationSuccessScreen
-import com.example.talkeysapk.screens.home.AboutUsScreen
-import com.example.talkeysapk.screens.home.CommunityData
-import com.example.talkeysapk.screens.home.ContactUsScreen
-import com.example.talkeysapk.screens.home.ExplorePage
-import com.example.talkeysapk.screens.home.HomeScreen
-import com.example.talkeysapk.screens.home.LandingPage
-import com.example.talkeysapk.screens.home.ScreenNotFound
-import com.example.talkeysapk.screens.home.TermsAndConditionsScreen
-import com.example.talkeysapk.screens.home.privacyPolicy
-import com.example.talkeysapk.ui.theme.TalkeysApkTheme
+import com.example.talkeysapk.screensUI.authentication.LoginScreen
+import com.example.talkeysapk.screensUI.authentication.SignUpScreen
+import com.example.talkeysapk.screensUI.community.CommunitiesScreen
+import com.example.talkeysapk.screensUI.community.CommunityInfo
+import com.example.talkeysapk.screensUI.events.CreateEventScreen
+import com.example.talkeysapk.screensUI.events.EventDetailScreen
+import com.example.talkeysapk.screensUI.events.EventRegistraion
+import com.example.talkeysapk.screensUI.events.EventVerificationScreen
+import com.example.talkeysapk.screensUI.events.ExploreEventsScreen
+import com.example.talkeysapk.screensUI.events.RegistrationSuccessScreen
+import com.example.talkeysapk.screensUI.home.AboutUsScreen
+import com.example.talkeysapk.screensUI.home.CommunityData
+import com.example.talkeysapk.screensUI.home.ContactUsScreen
+import com.example.talkeysapk.screensUI.home.ExplorePage
+import com.example.talkeysapk.screensUI.home.HomeScreen
+import com.example.talkeysapk.screensUI.home.LandingPage
+import com.example.talkeysapk.screensUI.home.ScreenNotFound
+import com.example.talkeysapk.screensUI.home.TermsAndConditionsScreen
+import com.example.talkeysapk.screensUI.home.privacyPolicy
 
-class MainActivity : ComponentActivity() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContent {
-            TalkeysApkTheme {
-                Surface(modifier = Modifier.fillMaxSize()) {
-                   AppNavigation()
-                }
-            }
-        }
-    }
-}
 @Composable
 fun AppNavigation() {
     val navController = rememberNavController()

@@ -1,4 +1,4 @@
-package com.example.talkeysapk.screens.authentication
+package com.example.talkeysapk.screensUI.authentication
 
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
