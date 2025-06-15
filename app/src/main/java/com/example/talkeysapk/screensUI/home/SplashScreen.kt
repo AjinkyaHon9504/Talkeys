@@ -7,10 +7,12 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.Surface
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.example.talkeysapk.MainActivity
@@ -20,31 +22,31 @@ import kotlinx.coroutines.delay
 class SplashActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         setContent {
-            SplashScreenContent {
-                // After splash screen, navigate to MainActivity
-                startActivity(Intent(this, MainActivity::class.java))
-                finish() // Close SplashActivity
-            }
+            SplashScreenContent()
         }
     }
 }
 
 @Composable
-fun SplashScreenContent(onTimeout: () -> Unit) {
+fun SplashScreenContent() {
+    val context = LocalContext.current
+
     LaunchedEffect(Unit) {
-        delay(2000) // Delay for 2 seconds
-        onTimeout()
+        delay(2000) // 2-second splash screen
+        context.startActivity(Intent(context, MainActivity::class.java))
+        if (context is ComponentActivity) {
+            context.finish()
+        }
     }
 
     Surface(
         modifier = Modifier.fillMaxSize(),
-        color = Color.Black // Change background color
+        color = Color.Black // Splash background color
     ) {
         Box(contentAlignment = Alignment.Center) {
             Image(
-                painter = painterResource(id = R.drawable.logo), // Replace with your logo
+                painter = painterResource(id = R.drawable.logo), // Replace with your actual logo
                 contentDescription = "Splash Logo",
                 modifier = Modifier
                     .size(200.dp)
@@ -53,4 +55,3 @@ fun SplashScreenContent(onTimeout: () -> Unit) {
         }
     }
 }
-

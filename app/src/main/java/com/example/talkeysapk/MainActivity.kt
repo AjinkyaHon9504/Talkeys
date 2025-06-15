@@ -1,5 +1,8 @@
 package com.example.talkeysapk
 
+import android.os.Bundle
+import androidx.activity.ComponentActivity
+import androidx.activity.compose.setContent
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
@@ -26,6 +29,7 @@ import com.example.talkeysapk.screensUI.home.LandingPage
 import com.example.talkeysapk.screensUI.home.ScreenNotFound
 import com.example.talkeysapk.screensUI.home.TermsAndConditionsScreen
 import com.example.talkeysapk.screensUI.home.privacyPolicy
+import com.example.talkeysapk.ui.theme.TalkeysApkTheme
 
 @Composable
 fun AppNavigation() {
@@ -47,40 +51,44 @@ fun AppNavigation() {
         composable("event_created_successfully") { EventVerificationScreen(navController) }
         composable("terms_conditions") { TermsAndConditionsScreen(navController) }
         composable("privacy_policy") { privacyPolicy(navController) }
-        composable("screen_not_found"){ ScreenNotFound(navController) }
-
+        composable("screen_not_found") { ScreenNotFound(navController) }
 
         composable(
-            "eventDetail/{eventTitle}",
+            route = "eventDetail/{eventTitle}",
             arguments = listOf(navArgument("eventTitle") { type = NavType.StringType })
         ) { backStackEntry ->
             val eventTitle = backStackEntry.arguments?.getString("eventTitle")
-
-            // Fetch event from global event list
-            val event = Event.getEventByTitle(eventTitle)
-
+            val event = eventTitle?.let { Event.getEventByTitle(it) }
             if (event != null) {
                 EventDetailScreen(event, navController)
             } else {
                 navController.popBackStack()
             }
         }
+
         composable(
-            "communityInfo/{communityName}",
+            route = "communityInfo/{communityName}",
             arguments = listOf(navArgument("communityName") { type = NavType.StringType })
         ) { backStackEntry ->
             val communityName = backStackEntry.arguments?.getString("communityName")
-
-            communityName?.let { name ->
-                val community = CommunityData.getCommunityByName(name)
-
-                if (community != null) {
-                    CommunityInfo(navController, community)
-                } else {
-                    navController.popBackStack() // Go back if community is not found
-                }
-            } ?: navController.popBackStack() // Handle null community name case
+            val community = communityName?.let { CommunityData.getCommunityByName(it) }
+            if (community != null) {
+                CommunityInfo(navController, community)
+            } else {
+                navController.popBackStack()
+            }
         }
-
     }
 }
+
+class MainActivity : ComponentActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContent {
+            TalkeysApkTheme {
+                AppNavigation()
+            }
+        }
+    }
+}
+
