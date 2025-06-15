@@ -1,5 +1,4 @@
 package com.example.talkeysapk.data.model
-
 import androidx.annotation.DrawableRes
 
 data class InfluencerHomeScreen(
